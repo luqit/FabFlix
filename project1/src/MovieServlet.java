@@ -64,12 +64,12 @@ public class MovieServlet extends HttpServlet {
         		
         		// add table header row
         		out.println("<tr>");
-        		out.println("<td>title</td>");
-        		out.println("<td>rating</td>");
-        		out.println("<td>year</td>");
-        		out.println("<td>director</td>");
-        		out.println("<td>genres</td>");
-        		out.println("<td>stars</td>");
+        		out.println("<td class = \"h1\">Title</td>");
+        		out.println("<td class = \"h1\">Rating</td>");
+        		out.println("<td class = \"h1\">Year</td>");
+        		out.println("<td class = \"h1\">Director</td>");
+        		out.println("<td class = \"h1\">Genres</td>");
+        		out.println("<td class = \"h1\">Stars</td>");
         		out.println("</tr>");
         		
         		// add a row for every star result
@@ -88,11 +88,11 @@ public class MovieServlet extends HttpServlet {
         			ResultSet resultSet3 = statement3.executeQuery(query3);
         			
         			out.println("<tr>");
-        			out.println("<td>" + mTitle + "</td>");
-        			out.println("<td>" + mRating + "</td>");
-        			out.println("<td>" + mYear + "</td>");
-        			out.println("<td>" + mDirector + "</td>");
-        			out.println("<td>");
+        			out.println("<td class = \"h2\">" + mTitle + "</td>");
+        			out.println("<td class = \"h2\">" + mRating + "</td>");
+        			out.println("<td class = \"h2\">" + mYear + "</td>");
+        			out.println("<td class = \"h2\">" + mDirector + "</td>");
+        			out.println("<td class = \"h2\">");
         			while(resultSet2.next())
         			{
         				if(resultSet2.isLast())
@@ -103,7 +103,7 @@ public class MovieServlet extends HttpServlet {
         				out.println(resultSet2.getString("name") + ", ");		
         			}
         			out.println("</td>");
-        			out.println("<td>");
+        			out.println("<td class = \"h2\">");
         			while(resultSet3.next())
         			{
         				if(resultSet3.isLast())

@@ -2,6 +2,17 @@ body
 {
 	background-color: #48486a;
 	font-family: "Impact";
-	font-size: 15 px; 
+	font-size: 135%; 
 	color: white;
+	letter-spacing: 1px;
+	text-align: center;
+}
+.h1
+{
+	font-size: 115%;
+}
+
+.h2
+{
+	font-size: 85%;
 }
