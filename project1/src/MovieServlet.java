@@ -32,7 +32,7 @@ public class MovieServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String loginUser = "root";
-        String loginPasswd = "Cookiesncream123!";
+        String loginPasswd = "TIAN950130";
         String loginUrl = "jdbc:mysql://localhost:3306/moviedb";
 		
         // set response mime type
