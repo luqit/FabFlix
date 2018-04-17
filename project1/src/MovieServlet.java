@@ -32,7 +32,7 @@ public class MovieServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String loginUser = "root";
-        String loginPasswd = "TIAN950130";
+        String loginPasswd = "Cookiesncream123!";
         String loginUrl = "jdbc:mysql://localhost:3306/moviedb";
 		
         // set response mime type
@@ -42,7 +42,7 @@ public class MovieServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         out.println("<html>");
-        out.println("<head><title>Fabflix</title></head>");
+        out.println("<head><link rel=\"stylesheet\" href=\"style.css\"><title>Fabflix</title></head>");
         
         
         try {
@@ -94,11 +94,25 @@ public class MovieServlet extends HttpServlet {
         			out.println("<td>" + mDirector + "</td>");
         			out.println("<td>");
         			while(resultSet2.next())
-        				out.println(resultSet2.getString("name") + " ");					
+        			{
+        				if(resultSet2.isLast())
+        				{
+        					out.println(resultSet2.getString("name"));
+        					break;
+        				}
+        				out.println(resultSet2.getString("name") + ", ");		
+        			}
         			out.println("</td>");
         			out.println("<td>");
         			while(resultSet3.next())
-        				out.println(resultSet3.getString("name") + " ");					
+        			{
+        				if(resultSet3.isLast())
+        				{
+        					out.println(resultSet3.getString("name"));
+        					break;
+        				}
+        				out.println(resultSet3.getString("name") + ", ");
+        			}
         			out.println("</td>");
         			out.println("</tr>");
         		}
