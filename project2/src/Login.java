@@ -32,7 +32,6 @@ public class Login extends HttpServlet {
 		String username = request.getParameter("user");
 		String password = request.getParameter("pass");
 		response.setContentType("text/html"); 
-		PrintWriter out = response.getWriter();
 		
 		try {
 		// create database connection
@@ -49,7 +48,14 @@ public class Login extends HttpServlet {
 		{
 			HttpSession session = request.getSession();
 			session.setAttribute("username", username);
-			response.sendRedirect("mainPage");
+			response.sendRedirect("mainPage.html");
+		}
+		else
+		{
+			PrintWriter out = response.getWriter();
+			request.getRequestDispatcher("login.html").include(request, response);
+			out.println("<br> <font color=\"blue\"> Invalid login information! </font>");
+			out.close();
 		}
 			
 	}

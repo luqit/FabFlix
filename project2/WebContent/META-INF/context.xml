@@ -7,5 +7,5 @@
               type="javax.sql.DataSource"
               username="root"
               password="Cookiesncream123!"
-              url="jdbc:mysql://localhost:3306/moviedb?verifyServerCertificate=false&amp;useSSL=true"/>
+              url="jdbc:mysql://localhost:3306/moviedb"/>
 </Context>
