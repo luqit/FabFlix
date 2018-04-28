@@ -4,8 +4,9 @@
     <Resource name="jdbc/moviedb"
               auth="Container"
               driverClassName="com.mysql.jdbc.Driver"
+              validationQuery="select 1"
               type="javax.sql.DataSource"
               username="root"
-              password="Cookiesncream123!"
+              password="TIAN950130"
               url="jdbc:mysql://localhost:3306/moviedb"/>
 </Context>
