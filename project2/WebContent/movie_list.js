@@ -23,13 +23,14 @@ function getParameterByName(target) {
  * Handles the data returned by the API, read the jsonObject and populate data into html elements
  * @param resultData jsonObject
  */
-/*
+
 function handleResult(resultData) {
 
     console.log("handleResult: populating star info from resultData");
 
     // populate the star info h3
     // find the empty h3 body by id "star_info"
+    
     let starInfoElement = jQuery("#star_info");
 
     // append two html <p> created to the h3 body, which will refresh the page
@@ -49,13 +50,14 @@ function handleResult(resultData) {
         rowHTML += "<th>" + resultData[i]["movie_title"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
+        rowHTML += "<th>" + resultData[i]["star_name"]
         rowHTML += "</tr>";
 
         // Append the row created to the table body, which will refresh the page
         movieTableBodyElement.append(rowHTML);
     }
 }
-*/
+
 let title = getParameterByName('title');
 let year = getParameterByName('year');
 let director = getParameterByName('director');
@@ -75,6 +77,6 @@ win.close();
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
-    url: "/MovieListServlet?title=" +title +"&year=" +year +"&director=" +directory +"&starName=" +starName, // Setting request url, which is mapped by StarsServlet in Stars.java
+    url: "MovieListServlet?title=" +title +"&year=" +year +"&director=" +director +"&starName=" +starName, // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });

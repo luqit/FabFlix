@@ -11,8 +11,28 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
        
 </head>
+
 <body>
-Moviesssss
+<h1>Movie List</h1>
+
+<!-- H3 body is left empty here, will be populated with the data retrieved with single-star.js -->
+<!-- single-star.js will find this html element by it's id "star_info" -->
+<h3 id="star_info"></h3>
+<table id=movie_table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Movie Title</th>
+        <th>Release Year</th>
+        <th>Director</th>
+        <th>Star Name</th>
+    </tr>
+    </thead>
+
+    <!-- Table body is left empty here, will be populated with the data retrieved with single-star.js -->
+    <!-- single-star.js will find this html element by it's id "movie_table_body" -->
+    <tbody id=movie_table_body></tbody>
+</table>
+
 <!-- Load jQuery and Bootstrap JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -22,6 +42,6 @@ Moviesssss
 <!-- The path is relative to single-star.html, since these two files are in the same directory -->
 <!-- Note the url does not contain a "/" in the beginning, which means the url is relative to current path
      otherwise the url is relative to the root path-->
-<script src="movie-list.js"></script>
+<script src="movie_list.js"></script>
 </body>
 </html>
