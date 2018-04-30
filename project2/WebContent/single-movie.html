@@ -1,19 +1,19 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-<meta name="viewport"
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-       
-</head>
 
+    <title>Single Movie</title>
+</head>
 <body>
-<h1>Movie List</h1>
+<h1>Single Movie Page</h1>
 
 <!-- H3 body is left empty here, will be populated with the data retrieved with single-star.js -->
 <!-- single-star.js will find this html element by it's id "star_info" -->
@@ -21,13 +21,10 @@
 <table id=movie_table class="table table-striped">
     <thead>
     <tr>
-    	<th>Movie ID</th>
         <th>Movie Title</th>
         <th>Release Year</th>
         <th>Director</th>
-        <th>Genres</th>
-        <th>Star</th>
-        <th>Rating</th>
+        <th>
     </tr>
     </thead>
 
@@ -45,6 +42,8 @@
 <!-- The path is relative to single-star.html, since these two files are in the same directory -->
 <!-- Note the url does not contain a "/" in the beginning, which means the url is relative to current path
      otherwise the url is relative to the root path-->
-<script src="movie_list.js"></script>
+<script src="single-star.js"></script>
 </body>
+
+
 </html>

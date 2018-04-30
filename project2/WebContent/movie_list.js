@@ -25,32 +25,35 @@ function getParameterByName(target) {
  */
 
 function handleResult(resultData) {
-
+	/*
     console.log("handleResult: populating star info from resultData");
-
     // populate the star info h3
-    // find the empty h3 body by id "star_info"
-    
+    //find the empty h3 body by id "star_info"
     let starInfoElement = jQuery("#star_info");
 
     // append two html <p> created to the h3 body, which will refresh the page
     starInfoElement.append("<p>Star Name: " + resultData[0]["star_name"] + "</p>" +
         "<p>Date Of Birth: " + resultData[0]["star_dob"] + "</p>");
-
+	
     console.log("handleResult: populating movie table from resultData");
+    */
 
     // Populate the star table
     // Find the empty table body by id "movie_table_body"
     let movieTableBodyElement = jQuery("#movie_table_body");
-
+    
     // Concatenate the html tags with resultData jsonObject to create table rows
     for (let i = 0; i < Math.min(10, resultData.length); i++) {
         let rowHTML = "";
         rowHTML += "<tr>";
-        rowHTML += "<th>" + resultData[i]["movie_title"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["star_name"]
+        rowHTML += "<th>" + resultData[i]["movieId"] + "</th>";
+        rowHTML += "<th>" + resultData[i]["movieTitle"] + "</th>";
+        rowHTML += "<th>" + resultData[i]["movieYear"] + "</th>";
+        rowHTML += "<th>" + resultData[i]["movieDirector"] + "</th>";
+        rowHTML += "<th>" + resultData[i]["genreNames"] + "</th>";
+        rowHTML += "<th>" + resultData[i]["starNames"] + "</th>";
+        rowHTML += "<th>" + resultData[i]["rating"] + "</th>";
+        //rowHTML += "<th><a href='single-star.html?id=" + resultData[i]["star_id"] +"'>" + resultData[i]["star_name"] + "</a></th>";
         rowHTML += "</tr>";
 
         // Append the row created to the table body, which will refresh the page
@@ -62,6 +65,7 @@ let title = getParameterByName('title');
 let year = getParameterByName('year');
 let director = getParameterByName('director');
 let starName = getParameterByName('starName');
+
 
 /*
 var win = window.open();

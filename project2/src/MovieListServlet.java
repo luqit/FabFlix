@@ -44,7 +44,13 @@ public class MovieListServlet extends HttpServlet {
 			List<String> queryList = new ArrayList<String>();
 
 			
-			String query = "select * from movies join stars_in_movies on movies.id = stars_in_movies.movieId join stars on stars.id = starId where ";
+			String query = "select movies.id, movies.title, movies.year, movies.director, ";
+			query += "group_concat(distinct(stars.name)) as starNames, group_concat(distinct(genres.name)) as genreNames, ratings.rating from movies ";
+			query += "join stars_in_movies on movies.id = stars_in_movies.movieId ";
+			query += "join stars on stars.id = starId ";
+			query += "join ratings on movies.id = ratings.movieId ";
+			query += "join genres_in_movies on movies.id = genres_in_movies.movieId ";
+			query += "join genres on genres_in_movies.genreId = genres.id where ";
 			
 			if(title != null || !title.isEmpty())
 			{
@@ -63,18 +69,19 @@ public class MovieListServlet extends HttpServlet {
 				queryList.add("movies.director LIKE '%" + director + "%'");
 				System.out.println(queryList);
 			}
-			
+			/*
 			if(name != null || ! name.isEmpty())
 			{
-				queryList.add("stars.name LIKE '%" + name + "%'");
+				queryList.add("star.names LIKE '%" + name + "%'");
 				System.out.println(queryList);
 			}
-			
+			*/
 			String queryAdd = String.join(" AND ", queryList);
 			
 			System.out.println(queryAdd);
 			
 			query += queryAdd;
+			query += " group by movies.id having starNames LIKE '%" + name + "%'";
 			
 			System.out.println(query);
 						
@@ -87,25 +94,24 @@ public class MovieListServlet extends HttpServlet {
 			// Iterate through each row of rs
 			while (rs.next()) {
 
-				String starId = rs.getString("starId");
-				String starName = rs.getString("name");
-				String starDob = rs.getString("birthYear");
-
-				String movieId = rs.getString("movieId");
+				String movieId = rs.getString("id");
 				String movieTitle = rs.getString("title");
 				String movieYear = rs.getString("year");
 				String movieDirector = rs.getString("director");
+				String genreNames = rs.getString("genreNames");
+				String starNames = rs.getString("starNames");
+				String rating = rs.getString("rating");
 
 				// Create a JsonObject based on the data we retrieve from rs
 
 				JsonObject jsonObject = new JsonObject();
-				jsonObject.addProperty("star_id", starId);
-				jsonObject.addProperty("star_name", starName);
-				jsonObject.addProperty("star_dob", starDob);
-				jsonObject.addProperty("movie_id", movieId);
-				jsonObject.addProperty("movie_title", movieTitle);
-				jsonObject.addProperty("movie_year", movieYear);
-				jsonObject.addProperty("movie_director", movieDirector);
+				jsonObject.addProperty("movieId", movieId);
+				jsonObject.addProperty("movieTitle", movieTitle);
+				jsonObject.addProperty("movieYear", movieYear);
+				jsonObject.addProperty("movieDirector", movieDirector);
+				jsonObject.addProperty("genreNames", genreNames);
+				jsonObject.addProperty("starNames", starNames);
+				jsonObject.addProperty("rating", rating);
 				
 				jsonArray.add(jsonObject);
 				}
