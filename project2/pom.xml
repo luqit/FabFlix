@@ -1,10 +1,11 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>project2-login-example</groupId>
-    <artifactId>project2-login-example</artifactId>
+    <groupId>edu.uci.ics</groupId>
+    <artifactId>project2-api-example</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -31,7 +32,7 @@
     </dependencies>
 
     <build>
-        <finalName>project2-login-example</finalName>
+        <finalName>project2-api-example</finalName>
         <sourceDirectory>src</sourceDirectory>
         <plugins>
             <plugin>
