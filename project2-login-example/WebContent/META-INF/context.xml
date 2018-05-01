@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <Context>
+
     <!-- Defines a Data Source Connecting to localhost moviedb-->
     <Resource name="jdbc/moviedb"
               auth="Container"
