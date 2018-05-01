@@ -55,33 +55,19 @@ function handleResult(resultData) {
         rowHTML += "<th>" + resultData[i]["movieYear"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movieDirector"] + "</th>";
         rowHTML += "<th>" + resultData[i]["genreNames"] + "</th>";
-        rowHTML += "<th>";//<a href='single-star.html?starName=" + resultData[i]["starNames"] + "'>" + resultData[i]["starNames"] + "</a>";
-        /*
-        var star = (resultData[i]["starNames"]);
-        var starArray = star.split(',');
-        var starLength = starArray.length;
-        console.log(starLength);
-        for(var i = 0; i < starLength; i++)
-        	{
-        	var win = window.open();
-            win.document.write(starArray[i]);
-            win.print();
-            win.close();
-        	//rowHTML += "<a href='single-star.html?starName=" + starArray[i] + "'>" + starArray[i] + "</a>";
-        	}
-       	*/
+        rowHTML += "<th>";
         var star = resultData[i]["starNames"];
         var starArray = star.split(',');
-        var win = window.open();
-        win.document.write(starArray.length);
-        win.print();
-        win.close();
-        for(var i = 0; i < starArray.length; i++)
+        for(var x = 0; x < starArray.length; x++)
         	{
-        	rowHTML += "<a href='single-star.html?starName=" + starArray[i] + "'>" + starArray[i] + "</a>";
+        	if(x == (starArray.length-1))
+        		{
+        		rowHTML += "<a href='single-star.html?starName=" + starArray[x] + "'>" + starArray[x] + "</a>";
+        		break;
+        		}	
+        	rowHTML += "<a href='single-star.html?starName=" + starArray[x] + "'>" + starArray[x] + "</a>, ";
         	}
         rowHTML += "</th>";
-        //rowHTML += "<th>" + resultData[i]["starNames"] + "</th>";
         rowHTML += "<th>" + resultData[i]["rating"] + "</th>";
         rowHTML += "</tr>";
 
