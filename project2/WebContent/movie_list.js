@@ -47,13 +47,42 @@ function handleResult(resultData) {
         let rowHTML = "";
         rowHTML += "<tr>";
         rowHTML += "<th>" + resultData[i]["movieId"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["movieTitle"] + "</th>";
+        rowHTML += "<th><a href='single-movie.html?id=" + resultData[i]["movieId"]; 
+        rowHTML += "&title=" + resultData[i]["movieTitle"] + "&year=" + resultData[i]["year"];
+        rowHTML += "&director=" + resultData[i]["movieDirector"] + resultData[i]["genreNames"];
+        rowHTML += "&starNames=" + resultData[i]["starNames"] + "&rating=" + resultData[i]["rating"];
+        rowHTML += "'>" + resultData[i]["movieTitle"] + "</a></th>";
         rowHTML += "<th>" + resultData[i]["movieYear"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movieDirector"] + "</th>";
         rowHTML += "<th>" + resultData[i]["genreNames"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["starNames"] + "</th>";
+        rowHTML += "<th>";//<a href='single-star.html?starName=" + resultData[i]["starNames"] + "'>" + resultData[i]["starNames"] + "</a>";
+        /*
+        var star = (resultData[i]["starNames"]);
+        var starArray = star.split(',');
+        var starLength = starArray.length;
+        console.log(starLength);
+        for(var i = 0; i < starLength; i++)
+        	{
+        	var win = window.open();
+            win.document.write(starArray[i]);
+            win.print();
+            win.close();
+        	//rowHTML += "<a href='single-star.html?starName=" + starArray[i] + "'>" + starArray[i] + "</a>";
+        	}
+       	*/
+        var star = resultData[i]["starNames"];
+        var starArray = star.split(',');
+        var win = window.open();
+        win.document.write(starArray.length);
+        win.print();
+        win.close();
+        for(var i = 0; i < starArray.length; i++)
+        	{
+        	rowHTML += "<a href='single-star.html?starName=" + starArray[i] + "'>" + starArray[i] + "</a>";
+        	}
+        rowHTML += "</th>";
+        //rowHTML += "<th>" + resultData[i]["starNames"] + "</th>";
         rowHTML += "<th>" + resultData[i]["rating"] + "</th>";
-        //rowHTML += "<th><a href='single-star.html?id=" + resultData[i]["star_id"] +"'>" + resultData[i]["star_name"] + "</a></th>";
         rowHTML += "</tr>";
 
         // Append the row created to the table body, which will refresh the page
