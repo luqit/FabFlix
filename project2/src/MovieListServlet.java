@@ -40,11 +40,28 @@ public class MovieListServlet extends HttpServlet {
 			String year = request.getParameter("year");
 			String director = request.getParameter("director");
 			String name = request.getParameter("starName");
+			String genre = request.getParameter("genre");
+			String query = "";
 			
+			if (genre != null || !genre.isEmpty())
+			{
+			System.out.println("GENREEEE");
+			query += "select movies.id, movies.title, movies.year, movies.director, ";
+			query += "group_concat(distinct(stars.name)) as starNames, group_concat(distinct(genres.name)) as genreNames, ratings.rating from movies ";
+			query += "join stars_in_movies on movies.id = stars_in_movies.movieId ";
+			query += "join stars on stars.id = starId ";
+			query += "join ratings on movies.id = ratings.movieId ";
+			query += "join genres_in_movies on movies.id = genres_in_movies.movieId ";
+			query += "join genres on genres_in_movies.genreId = genres.id ";
+			query += "group by movies.id having genreNames LIKE '%" + genre + "%'";
+			}
+			
+			else
+			{
 			List<String> queryList = new ArrayList<String>();
 
 			
-			String query = "select movies.id, movies.title, movies.year, movies.director, ";
+			query += "select movies.id, movies.title, movies.year, movies.director, ";
 			query += "group_concat(distinct(stars.name)) as starNames, group_concat(distinct(genres.name)) as genreNames, ratings.rating from movies ";
 			query += "join stars_in_movies on movies.id = stars_in_movies.movieId ";
 			query += "join stars on stars.id = starId ";
@@ -84,7 +101,8 @@ public class MovieListServlet extends HttpServlet {
 			query += " group by movies.id having starNames LIKE '%" + name + "%'";
 			
 			System.out.println(query);
-						
+			}
+			
 			Statement statement = database.createStatement();
 			
 			ResultSet rs = statement.executeQuery(query);	
