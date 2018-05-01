@@ -1,3 +1,4 @@
+
 function handleStarResult(resultData) {
     console.log("handleStarResult: populating star table from resultData");
 
@@ -19,11 +20,36 @@ function handleStarResult(resultData) {
     		}
     		rowHTML += "</tr>";
     		table.append(rowHTML);
-    		console.log(rowHTML);
     	}
     }
-}
     
+    let table1 = jQuery("#titleTable");
+    
+    let aa = 'A'.charCodeAt(0), l = 'Z'.charCodeAt(0);
+    for (let i = 0; i < 26; i++) {
+      if(i % 13 == 0){
+          let rowHTML = "<tr>";
+          for (let j = 0; j < 13; j++) {
+            rowHTML += "<td>" +
+            '<a href="browse.html?by=title&init=' + String.fromCharCode(aa) + '">'
+            + String.fromCharCode(aa++) + '</a>' + "</td>";
+          }
+          rowHTML += "</tr>";
+          table1.append(rowHTML);
+       } 
+      
+    }
+    
+    let rowHTML = "<tr>";
+    for (var i = 0; i <= 9; ++i) {
+      rowHTML += "<td>" +
+      '<a href="browse.html?by=genre&init=' + String(i) + '">'
+      + String(i) + '</a>' + "</td>";
+    }
+    rowHTML += "</tr>";
+    table1.append(rowHTML);
+   
+}       
 
 
 // Makes the HTTP GET request and registers on success callback function handleStarResult
