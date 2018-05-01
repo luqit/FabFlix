@@ -54,7 +54,19 @@ function handleResult(resultData) {
         rowHTML += "'>" + resultData[i]["movieTitle"] + "</a></th>";
         rowHTML += "<th>" + resultData[i]["movieYear"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movieDirector"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["genreNames"] + "</th>";
+        rowHTML += "<th>";
+        var genre = resultData[i]["genreNames"];
+        var genreArray = genre.split(',');
+        for(var z = 0; z < genreArray.length; z++)
+        	{
+        	if(z == (genreArray.length-1))
+        		{
+        		rowHTML += genreArray[z];
+        		break;
+        		}	
+        	rowHTML += genreArray[z] + ", ";
+        	}
+        rowHTML += "</th>";
         rowHTML += "<th>";
         var star = resultData[i]["starNames"];
         var starArray = star.split(',');
