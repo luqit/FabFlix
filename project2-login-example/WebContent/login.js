@@ -28,11 +28,11 @@ function handleLoginResult(resultDataString) {
  */
 function submitLoginForm(formSubmitEvent) {
     console.log("submit login form");
-
     // Important: disable the default action of submitting the form
     //   which will cause the page to refresh
     //   see jQuery reference for details: https://api.jquery.com/submit/
     formSubmitEvent.preventDefault();
+    console.log("prevent");
 
     jQuery.post(
         "api/login",
