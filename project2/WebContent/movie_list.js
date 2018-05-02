@@ -91,6 +91,7 @@ let director = getParameterByName('director');
 let starName = getParameterByName('starName');
 let genre = getParameterByName('genre');
 let genreId = getParameterByName('genreId');
+let letter = getParameterByName('letter'); 
 
 /*
 var win = window.open();
@@ -106,6 +107,6 @@ win.close();
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
-    url: "MovieListServlet?title=" +title +"&year=" +year +"&director=" +director +"&starName=" +starName +"&genre=" +genre + "&genreId=" +genreId, // Setting request url, which is mapped by StarsServlet in Stars.java
+    url: "MovieListServlet?title=" +title +"&year=" +year +"&director=" +director +"&starName=" +starName +"&genre=" +genre + "&genreId=" +genreId + "&letter=" +letter, // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });
