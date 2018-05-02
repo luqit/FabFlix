@@ -21,7 +21,7 @@ import com.google.gson.JsonObject;
  */
 @WebServlet("/SearchServlet")
 public class SearchServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6L;
 	
 	@Resource(name= "jdbc/moviedb")
 	private DataSource dataSource;

@@ -17,7 +17,7 @@ import java.sql.ResultSet;
 
 @WebServlet(name = "BrowseServlet", urlPatterns = "/api/browse")
 public class BrowseServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3L;
 
     // Create a dataSource which registered in web.xml
     @Resource(name = "jdbc/moviedb")

@@ -43,9 +43,10 @@ public class MovieListServlet extends HttpServlet {
 			String genre = request.getParameter("genre");
 			String query = "";
 			
-			if (genre != null || !genre.isEmpty())
+			if (!genre.equals("null") && !genre.isEmpty())
 			{
 			System.out.println("GENREEEE");
+			System.out.println(genre);
 			query += "select movies.id, movies.title, movies.year, movies.director, ";
 			query += "group_concat(distinct(stars.name)) as starNames, group_concat(distinct(genres.name)) as genreNames, ratings.rating from movies ";
 			query += "join stars_in_movies on movies.id = stars_in_movies.movieId ";
@@ -69,19 +70,19 @@ public class MovieListServlet extends HttpServlet {
 			query += "join genres_in_movies on movies.id = genres_in_movies.movieId ";
 			query += "join genres on genres_in_movies.genreId = genres.id where ";
 			
-			if(title != null || !title.isEmpty())
+			if(!title.equals("null") && !title.isEmpty())
 			{
 				queryList.add("movies.title LIKE '%" + title + "%'");
 				System.out.println(queryList);
 			}
 			
-			if(year != null || !year.isEmpty())
+			if(!year.equals("null") && !year.isEmpty())
 			{
 				queryList.add("movies.year LIKE '%" + year + "%'");
 				System.out.println(queryList);
 			}
 			
-			if(director != null || !director.isEmpty())
+			if(!director.equals("null") && !director.isEmpty())
 			{
 				queryList.add("movies.director LIKE '%" + director + "%'");
 				System.out.println(queryList);

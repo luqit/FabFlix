@@ -48,9 +48,6 @@ function handleResult(resultData) {
         rowHTML += "<tr>";
         rowHTML += "<th>" + resultData[i]["movieId"] + "</th>";
         rowHTML += "<th><a href='single-movie.html?id=" + resultData[i]["movieId"]; 
-        rowHTML += "&title=" + resultData[i]["movieTitle"] + "&year=" + resultData[i]["year"];
-        rowHTML += "&director=" + resultData[i]["movieDirector"] + resultData[i]["genreNames"];
-        rowHTML += "&starNames=" + resultData[i]["starNames"] + "&rating=" + resultData[i]["rating"];
         rowHTML += "'>" + resultData[i]["movieTitle"] + "</a></th>";
         rowHTML += "<th>" + resultData[i]["movieYear"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movieDirector"] + "</th>";

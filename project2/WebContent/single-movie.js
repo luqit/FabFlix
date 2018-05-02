@@ -57,10 +57,10 @@ function handleResult(resultData) {
         	{
         	if(z == (genreArray.length-1))
         		{
-        		rowHTML += genreArray[z];
+        		rowHTML += "<a href='movie_list.html?genre=" + genreArray[z] + "'>" + genreArray[z] + "</a>";
         		break;
         		}	
-        	rowHTML += genreArray[z] + ", ";
+        	rowHTML += "<a href='movie_list.html?genre=" + genreArray[z] + "'>" + genreArray[z] + "</a>, ";
         	}
         rowHTML += "</th>";
         rowHTML += "<th>";
@@ -85,21 +85,14 @@ function handleResult(resultData) {
 }
 
 let movieId = getParameterByName('id');
+let movie = getParameterByName('movie');
 
-/*
-var win = window.open();
-win.document.write(title);
-win.document.write(year);
-win.document.write(director);
-win.document.write(starName);
-win.print();
-win.close();
-*/
+console.log(movieId);
 
 //Makes the HTTP GET request and registers on success callback function handleResult
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
-    url: "SingleMovieListServlet?id=" +movieId, // Setting request url, which is mapped by StarsServlet in Stars.java
+    url: "SingleMovieServlet?id=" +movieId + "&movie=" + movie, // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });

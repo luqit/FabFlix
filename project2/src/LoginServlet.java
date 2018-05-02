@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 //
 @WebServlet(name = "LoginServlet", urlPatterns = "/api/login")
 public class LoginServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 5L;
     @Resource(name = "jdbc/moviedb")
     private DataSource dataSource;
 
