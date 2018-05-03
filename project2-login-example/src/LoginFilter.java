@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * Servlet Filter implementation class LoginFilter
  */
-@WebFilter(filterName = "LoginFilter", urlPatterns = "/23/*")
+@WebFilter(filterName = "LoginFilter", urlPatterns = "/*")
 public class LoginFilter implements Filter {
 
     /**
@@ -16,6 +16,8 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
+        
+        System.out.println("LoginFilter: " + 123);
 
         System.out.println("LoginFilter: " + httpRequest.getRequestURI());
         System.out.println(httpRequest.getSession().getAttribute("user"));
@@ -53,6 +55,7 @@ public class LoginFilter implements Filter {
      */
 
     public void init(FilterConfig fConfig) {
+    	
     }
 
     public void destroy() {
