@@ -43,7 +43,7 @@ function handleResult(resultData) {
     let movieTableBodyElement = jQuery("#movie_table_body");
     
     // Concatenate the html tags with resultData jsonObject to create table rows
-    for (let i = 0; i < Math.min(resultData[i]["limit"], resultData.length); i++) {
+    for (let i = 0; i < parseInt(resultData[0]["limit"]); i++) {
         let rowHTML = "";
         rowHTML += "<tr>";
         rowHTML += "<th>" + resultData[i]["movieId"] + "</th>";
@@ -52,8 +52,7 @@ function handleResult(resultData) {
         rowHTML += "<th>" + resultData[i]["movieYear"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movieDirector"] + "</th>";
         rowHTML += "<th>";
-        var genre = resultData[i]["genreNames"];
-        var genreArray = genre.split(',');
+        var genreArray = resultData[i]["genreNames"].split(',');
         for(var z = 0; z < genreArray.length; z++)
         	{
         	if(z == (genreArray.length-1))
@@ -97,8 +96,46 @@ function handleResult(resultData) {
         sortByTitleLink += "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=" + limit + "&offset=" + offset;
         sortByTitleLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
         sortByTitleLink += "&letter=" + letter + "&order=desc_rating'>Descending Rating</a>";
-        
+        console.log(sortByTitleLink);
         sortByTitle.append(sortByTitleLink);
+        
+        let moviesPerPage = jQuery("#listNum");
+        var moviesPerPageLink = "Movies Per Page: <a href='movie_list.html?title=" + title + "&year=" + year + "&limit=10&offset=" + offset;
+        moviesPerPageLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        moviesPerPageLink += "&letter=" + letter + "&order=" + order + "'>10</a> ";
+        moviesPerPageLink +=  "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=20&offset=" + offset;
+        moviesPerPageLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        moviesPerPageLink += "&letter=" + letter + "&order=" + order + "'>20</a> ";
+        moviesPerPageLink +=  "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=30&offset=" + offset;
+        moviesPerPageLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        moviesPerPageLink += "&letter=" + letter + "&order=" + order + "'>30</a> ";
+        moviesPerPageLink +=  "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=40&offset=" + offset;
+        moviesPerPageLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        moviesPerPageLink += "&letter=" + letter + "&order=" + order + "'>40</a> ";
+        moviesPerPageLink +=  "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=50&offset=" + offset;
+        moviesPerPageLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        moviesPerPageLink += "&letter=" + letter + "&order=" + order + "'>50</a>";
+  
+        console.log(listNum);
+        moviesPerPage.append(moviesPerPageLink);
+        
+        let next = jQuery("#next");
+        var nextInt = parseInt(offset) + parseInt(limit);
+        var nextLink = "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=" + limit + "&offset=" + nextInt;
+        nextLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        nextLink += "&letter=" + letter + "&order=" + order + "'>Next Page</a> ";
+        next.append(nextLink);
+        
+        let prev = jQuery("#prev");
+        var offsetInt = parseInt(offset);
+        if((offsetInt - parseInt(limit)) < 0)
+        	offsetInt = 0;
+        else
+        	offsetInt = offsetInt - parseInt(limit);
+        prevLink = "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=" + limit + "&offset=" + offsetInt;
+        prevLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        prevLink += "&letter=" + letter + "&order=" + order + "'>Previous Page</a> ";
+        prev.append(prevLink);
         
         /*
         function myFunction() {

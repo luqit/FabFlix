@@ -47,7 +47,7 @@ public class MovieListServlet extends HttpServlet {
 			String offset = request.getParameter("offset");
 			String query = "";
 			
-			if(!order.equals("null") && !order.isEmpty())
+			if(!order.equals("null") && !order.isEmpty() && !genre.equals("null"))
 			{
 			String sortBy = "";
 			if(order.equals("asc_title"))
@@ -65,7 +65,30 @@ public class MovieListServlet extends HttpServlet {
 			query += "join ratings on movies.id = ratings.movieId ";
 			query += "join genres_in_movies on movies.id = genres_in_movies.movieId ";
 			query += "join genres on genres_in_movies.genreId = genres.id ";
-			query += "group by movies.id ";
+			query += "group by movies.id having genreNames LIKE '%" + genre + "%' ";
+			query += sortBy;
+			query += "limit " + limit + " offset " + offset;
+			}
+			
+			else if(!order.equals("null") && !order.isEmpty())
+			{
+			String sortBy = "";
+			if(order.equals("asc_title"))
+				sortBy += "order by movies.title ASC ";
+			else if(order.equals("desc_title"))
+				sortBy += "order by movies.title DESC ";
+			else if(order.equals("asc_rating"))
+				sortBy += "order by rating ASC ";
+			else if(order.equals("desc_rating"))
+				sortBy += "order by rating DESC ";
+			query += "select movies.id, movies.title, movies.year, movies.director, ";
+			query += "group_concat(distinct(stars.name)) as starNames, group_concat(distinct(genres.name)) as genreNames, ratings.rating from movies ";
+			query += "join stars_in_movies on movies.id = stars_in_movies.movieId ";
+			query += "join stars on stars.id = starId ";
+			query += "join ratings on movies.id = ratings.movieId ";
+			query += "join genres_in_movies on movies.id = genres_in_movies.movieId ";
+			query += "join genres on genres_in_movies.genreId = genres.id ";
+			query += "group by movies.id";
 			query += sortBy;
 			query += "limit " + limit + " offset " + offset;
 			}
