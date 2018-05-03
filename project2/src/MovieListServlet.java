@@ -41,11 +41,23 @@ public class MovieListServlet extends HttpServlet {
 			String director = request.getParameter("director");
 			String name = request.getParameter("starName");
 			String genre = request.getParameter("genre");
+			String letter = request.getParameter("letter");
+			String order = request.getParameter("order");
+			String limit = request.getParameter("limit");
+			String offset = request.getParameter("offset");
 			String query = "";
 			
-			if (genre != null || !genre.isEmpty())
+			if(!order.equals("null") && !order.isEmpty() && !genre.equals("null"))
 			{
-			System.out.println("GENREEEE");
+			String sortBy = "";
+			if(order.equals("asc_title"))
+				sortBy += "order by movies.title ASC ";
+			else if(order.equals("desc_title"))
+				sortBy += "order by movies.title DESC ";
+			else if(order.equals("asc_rating"))
+				sortBy += "order by rating ASC ";
+			else if(order.equals("desc_rating"))
+				sortBy += "order by rating DESC ";
 			query += "select movies.id, movies.title, movies.year, movies.director, ";
 			query += "group_concat(distinct(stars.name)) as starNames, group_concat(distinct(genres.name)) as genreNames, ratings.rating from movies ";
 			query += "join stars_in_movies on movies.id = stars_in_movies.movieId ";
@@ -53,7 +65,60 @@ public class MovieListServlet extends HttpServlet {
 			query += "join ratings on movies.id = ratings.movieId ";
 			query += "join genres_in_movies on movies.id = genres_in_movies.movieId ";
 			query += "join genres on genres_in_movies.genreId = genres.id ";
-			query += "group by movies.id having genreNames LIKE '%" + genre + "%'";
+			query += "group by movies.id having genreNames LIKE '%" + genre + "%' ";
+			query += sortBy;
+			query += "limit " + limit + " offset " + offset;
+			}
+			
+			else if(!order.equals("null") && !order.isEmpty())
+			{
+			String sortBy = "";
+			if(order.equals("asc_title"))
+				sortBy += "order by movies.title ASC ";
+			else if(order.equals("desc_title"))
+				sortBy += "order by movies.title DESC ";
+			else if(order.equals("asc_rating"))
+				sortBy += "order by rating ASC ";
+			else if(order.equals("desc_rating"))
+				sortBy += "order by rating DESC ";
+			query += "select movies.id, movies.title, movies.year, movies.director, ";
+			query += "group_concat(distinct(stars.name)) as starNames, group_concat(distinct(genres.name)) as genreNames, ratings.rating from movies ";
+			query += "join stars_in_movies on movies.id = stars_in_movies.movieId ";
+			query += "join stars on stars.id = starId ";
+			query += "join ratings on movies.id = ratings.movieId ";
+			query += "join genres_in_movies on movies.id = genres_in_movies.movieId ";
+			query += "join genres on genres_in_movies.genreId = genres.id ";
+			query += "group by movies.id";
+			query += sortBy;
+			query += "limit " + limit + " offset " + offset;
+			}
+			
+			else if (!letter.equals("null") && !letter.isEmpty())
+			{
+			query += "select movies.id, movies.title, movies.year, movies.director, ";
+			query += "group_concat(distinct(stars.name)) as starNames, group_concat(distinct(genres.name)) as genreNames, ratings.rating from movies ";
+			query += "join stars_in_movies on movies.id = stars_in_movies.movieId ";
+			query += "join stars on stars.id = starId ";
+			query += "join ratings on movies.id = ratings.movieId ";
+			query += "join genres_in_movies on movies.id = genres_in_movies.movieId ";
+			query += "join genres on genres_in_movies.genreId = genres.id ";
+			query += "group by movies.id having movies.title LIKE '" + letter + "%' ";
+			query += "limit " + limit + " offset " + offset;
+			}
+			
+			else if (!genre.equals("null") && !genre.isEmpty())
+			{
+			System.out.println("GENREEEE");
+			System.out.println(genre);
+			query += "select movies.id, movies.title, movies.year, movies.director, ";
+			query += "group_concat(distinct(stars.name)) as starNames, group_concat(distinct(genres.name)) as genreNames, ratings.rating from movies ";
+			query += "join stars_in_movies on movies.id = stars_in_movies.movieId ";
+			query += "join stars on stars.id = starId ";
+			query += "join ratings on movies.id = ratings.movieId ";
+			query += "join genres_in_movies on movies.id = genres_in_movies.movieId ";
+			query += "join genres on genres_in_movies.genreId = genres.id ";
+			query += "group by movies.id having genreNames LIKE '%" + genre + "%' ";
+			query += "limit " + limit + " offset " + offset;
 			}
 			
 			else
@@ -69,19 +134,19 @@ public class MovieListServlet extends HttpServlet {
 			query += "join genres_in_movies on movies.id = genres_in_movies.movieId ";
 			query += "join genres on genres_in_movies.genreId = genres.id where ";
 			
-			if(title != null || !title.isEmpty())
+			if(!title.equals("null") && !title.isEmpty())
 			{
 				queryList.add("movies.title LIKE '%" + title + "%'");
 				System.out.println(queryList);
 			}
 			
-			if(year != null || !year.isEmpty())
+			if(!year.equals("null") && !year.isEmpty())
 			{
 				queryList.add("movies.year LIKE '%" + year + "%'");
 				System.out.println(queryList);
 			}
 			
-			if(director != null || !director.isEmpty())
+			if(!director.equals("null") && !director.isEmpty())
 			{
 				queryList.add("movies.director LIKE '%" + director + "%'");
 				System.out.println(queryList);
@@ -98,10 +163,10 @@ public class MovieListServlet extends HttpServlet {
 			System.out.println(queryAdd);
 			
 			query += queryAdd;
-			query += " group by movies.id having starNames LIKE '%" + name + "%'";
-			
-			System.out.println(query);
+			query += " group by movies.id having starNames LIKE '%" + name + "%' ";
+			query += "limit " + limit + " offset " + offset;
 			}
+			System.out.println(query);
 			
 			Statement statement = database.createStatement();
 			
@@ -109,7 +174,7 @@ public class MovieListServlet extends HttpServlet {
 
 			JsonArray jsonArray = new JsonArray();
 
-			// Iterate through each row of rs
+			// Iterate through each row of rsl
 			while (rs.next()) {
 
 				String movieId = rs.getString("id");
@@ -130,6 +195,8 @@ public class MovieListServlet extends HttpServlet {
 				jsonObject.addProperty("genreNames", genreNames);
 				jsonObject.addProperty("starNames", starNames);
 				jsonObject.addProperty("rating", rating);
+				jsonObject.addProperty("limit", limit);
+				jsonObject.addProperty("offset", offset);
 				
 				jsonArray.add(jsonObject);
 				}

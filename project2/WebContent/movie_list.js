@@ -18,11 +18,11 @@ function getParameterByName(target) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-
 /**
  * Handles the data returned by the API, read the jsonObject and populate data into html elements
  * @param resultData jsonObject
  */
+
 
 function handleResult(resultData) {
 	/*
@@ -43,20 +43,16 @@ function handleResult(resultData) {
     let movieTableBodyElement = jQuery("#movie_table_body");
     
     // Concatenate the html tags with resultData jsonObject to create table rows
-    for (let i = 0; i < Math.min(10, resultData.length); i++) {
+    for (let i = 0; i < parseInt(resultData[0]["limit"]); i++) {
         let rowHTML = "";
         rowHTML += "<tr>";
         rowHTML += "<th>" + resultData[i]["movieId"] + "</th>";
         rowHTML += "<th><a href='single-movie.html?id=" + resultData[i]["movieId"]; 
-        rowHTML += "&title=" + resultData[i]["movieTitle"] + "&year=" + resultData[i]["year"];
-        rowHTML += "&director=" + resultData[i]["movieDirector"] + resultData[i]["genreNames"];
-        rowHTML += "&starNames=" + resultData[i]["starNames"] + "&rating=" + resultData[i]["rating"];
         rowHTML += "'>" + resultData[i]["movieTitle"] + "</a></th>";
         rowHTML += "<th>" + resultData[i]["movieYear"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movieDirector"] + "</th>";
         rowHTML += "<th>";
-        var genre = resultData[i]["genreNames"];
-        var genreArray = genre.split(',');
+        var genreArray = resultData[i]["genreNames"].split(',');
         for(var z = 0; z < genreArray.length; z++)
         	{
         	if(z == (genreArray.length-1))
@@ -86,14 +82,93 @@ function handleResult(resultData) {
         // Append the row created to the table body, which will refresh the page
         movieTableBodyElement.append(rowHTML);
     }
-}
+        let sortByTitle = jQuery("#sorting");
+        
+        var sortByTitleLink = "Sort by: <a href='movie_list.html?title=" + title + "&year=" + year + "&limit=" + limit + "&offset=" + offset;
+        sortByTitleLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        sortByTitleLink += "&letter=" + letter + "&order=asc_title'>Ascending Title</a>, ";
+        sortByTitleLink += "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=" + limit + "&offset=" + offset;
+        sortByTitleLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        sortByTitleLink += "&letter=" + letter + "&order=desc_title'>Descending Title</a>, ";
+        sortByTitleLink += "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=" + limit + "&offset=" + offset;
+        sortByTitleLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        sortByTitleLink += "&letter=" + letter + "&order=asc_rating'>Ascending Rating</a>, ";
+        sortByTitleLink += "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=" + limit + "&offset=" + offset;
+        sortByTitleLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        sortByTitleLink += "&letter=" + letter + "&order=desc_rating'>Descending Rating</a>";
+        console.log(sortByTitleLink);
+        sortByTitle.append(sortByTitleLink);
+        
+        let moviesPerPage = jQuery("#listNum");
+        var moviesPerPageLink = "Movies Per Page: <a href='movie_list.html?title=" + title + "&year=" + year + "&limit=10&offset=" + offset;
+        moviesPerPageLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        moviesPerPageLink += "&letter=" + letter + "&order=" + order + "'>10</a> ";
+        moviesPerPageLink +=  "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=20&offset=" + offset;
+        moviesPerPageLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        moviesPerPageLink += "&letter=" + letter + "&order=" + order + "'>20</a> ";
+        moviesPerPageLink +=  "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=30&offset=" + offset;
+        moviesPerPageLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        moviesPerPageLink += "&letter=" + letter + "&order=" + order + "'>30</a> ";
+        moviesPerPageLink +=  "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=40&offset=" + offset;
+        moviesPerPageLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        moviesPerPageLink += "&letter=" + letter + "&order=" + order + "'>40</a> ";
+        moviesPerPageLink +=  "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=50&offset=" + offset;
+        moviesPerPageLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        moviesPerPageLink += "&letter=" + letter + "&order=" + order + "'>50</a>";
+  
+        console.log(listNum);
+        moviesPerPage.append(moviesPerPageLink);
+        
+        let next = jQuery("#next");
+        var nextInt = parseInt(offset) + parseInt(limit);
+        var nextLink = "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=" + limit + "&offset=" + nextInt;
+        nextLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        nextLink += "&letter=" + letter + "&order=" + order + "'>Next Page</a> ";
+        next.append(nextLink);
+        
+        let prev = jQuery("#prev");
+        var offsetInt = parseInt(offset);
+        if((offsetInt - parseInt(limit)) < 0)
+        	offsetInt = 0;
+        else
+        	offsetInt = offsetInt - parseInt(limit);
+        prevLink = "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=" + limit + "&offset=" + offsetInt;
+        prevLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        prevLink += "&letter=" + letter + "&order=" + order + "'>Previous Page</a> ";
+        prev.append(prevLink);
+        
+        /*
+        function myFunction() {
+            document.getElementById("sortByTitle").classList.toggle("show");
+        }
 
+        window.onclick = function(event) {
+        	  if (!event.target.matches('.dropbtn')) {
+
+        	    var dropdowns = document.getElementsById("sortByTitle");
+        	    var i;
+        	    for (i = 0; i < dropdowns.length; i++) {
+        	      var openDropdown = dropdowns[i];
+        	      if (openDropdown.classList.contains('show')) {
+        	        openDropdown.classList.remove('show');
+        	      }
+        	    }
+        	  }
+        }
+        
+}
+*/
+}
 let title = getParameterByName('title');
 let year = getParameterByName('year');
 let director = getParameterByName('director');
 let starName = getParameterByName('starName');
 let genre = getParameterByName('genre');
 let genreId = getParameterByName('genreId');
+let letter = getParameterByName('letter'); 
+let order = getParameterByName('order');
+let limit = getParameterByName('limit');
+let offset = getParameterByName('offset');
 
 /*
 var win = window.open();
@@ -109,6 +184,6 @@ win.close();
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
-    url: "MovieListServlet?title=" +title +"&year=" +year +"&director=" +director +"&starName=" +starName +"&genre=" +genre + "&genreId=" +genreId, // Setting request url, which is mapped by StarsServlet in Stars.java
+    url: "MovieListServlet?title=" +title +"&year=" +year +"&director=" +director +"&starName=" +starName +"&genre=" +genre + "&genreId=" +genreId + "&letter=" +letter + "&order=" +order + "&limit=" +limit + "&offset=" +offset, // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });

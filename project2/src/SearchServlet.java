@@ -21,7 +21,7 @@ import com.google.gson.JsonObject;
  */
 @WebServlet("/SearchServlet")
 public class SearchServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6L;
 	
 	@Resource(name= "jdbc/moviedb")
 	private DataSource dataSource;
@@ -42,7 +42,7 @@ public class SearchServlet extends HttpServlet {
 		request.setAttribute("director", director);
 		request.setAttribute("starName", starName);
 		
-		response.sendRedirect("movie_list.html?title="+title+"&year="+year+"&director="+director+"&starName="+starName);
+		response.sendRedirect("movie_list.html?title="+title+"&year="+year+"&director="+director+"&starName="+starName+"&limit=10&offset=0");
 		//NEXT: get URL parameters (&title=asdf&year=asdf....etc) through js. kinda like how
 		//it's done in single star servlet. js gets html URL parameters -> through ajax 
 		//adds parameters to servlet URL -> servlet .getParameter each parameter and 
