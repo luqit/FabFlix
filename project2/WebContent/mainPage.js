@@ -12,7 +12,7 @@ function handleGenreResult(resultData) {
 	            rowHTML +=
 	                "<td>" +
 	                // Add a link to single-star.html with id passed with GET url parameter
-	                '<a href="movie_list.html?genre=' + resultData[i+j]['genre'] + "&limit=10&offset=0'>"
+	                '<a href="movie_list.html?genre=' + resultData[i+j]['genre'] + '&limit=10&offset=0">' 
 	                + resultData[i+j]["genre"] +     // display star_name for the link text
 	                '</a>' +
 	                "</td>";

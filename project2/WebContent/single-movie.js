@@ -57,10 +57,10 @@ function handleResult(resultData) {
         	{
         	if(z == (genreArray.length-1))
         		{
-        		rowHTML += "<a href='movie_list.html?genre=" + genreArray[z] + "'>" + genreArray[z] + "</a>";
+        		rowHTML += "<a href='movie_list.html?limit=10&offset=0&genre=" + genreArray[z] + "'>" + genreArray[z] + "</a>";
         		break;
         		}	
-        	rowHTML += "<a href='movie_list.html?genre=" + genreArray[z] + "'>" + genreArray[z] + "</a>, ";
+        	rowHTML += "<a href='movie_list.html?limit=10&offset=0&genre=" + genreArray[z] + "'>" + genreArray[z] + "</a>, ";
         	}
         rowHTML += "</th>";
         rowHTML += "<th>";
