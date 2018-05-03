@@ -21,6 +21,10 @@
 <table id=movie_table class="table table-striped">
     <thead>
     <tr>
+    <th id="sorting"></th>
+    <th id="numResults">numResults</th>
+    </tr>
+    <tr>
     	<th>Movie ID</th>
         <th>Movie Title</th>
         <th>Release Year</th>
@@ -29,13 +33,21 @@
         <th>Star</th>
         <th>Rating</th>
     </tr>
+    <!--  Tried to do a drop down button here, but it button only shows the options never hides it. 
+    If you wanna try to fix it: uncomment this and line 95-115 in movie_list.js Going into JS console,
+    you'll see the #sortByList.show toggling, but not changing dunnoooo whyyyy
+    	<div class="dropdown">
+  		<button onclick="myFunction()" class="dropbtn">Movie Title</button>
+  		<div class="dropdown-content" id="sortByTitle">
+  		</div>
+		</div>
+	-->
     </thead>
 
     <!-- Table body is left empty here, will be populated with the data retrieved with single-star.js -->
     <!-- single-star.js will find this html element by it's id "movie_table_body" -->
     <tbody id=movie_table_body></tbody>
 </table>
-
 <!-- Load jQuery and Bootstrap JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>

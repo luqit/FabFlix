@@ -18,11 +18,11 @@ function getParameterByName(target) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-
 /**
  * Handles the data returned by the API, read the jsonObject and populate data into html elements
  * @param resultData jsonObject
  */
+
 
 function handleResult(resultData) {
 	/*
@@ -43,7 +43,7 @@ function handleResult(resultData) {
     let movieTableBodyElement = jQuery("#movie_table_body");
     
     // Concatenate the html tags with resultData jsonObject to create table rows
-    for (let i = 0; i < Math.min(10, resultData.length); i++) {
+    for (let i = 0; i < Math.min(resultData[i]["limit"], resultData.length); i++) {
         let rowHTML = "";
         rowHTML += "<tr>";
         rowHTML += "<th>" + resultData[i]["movieId"] + "</th>";
@@ -83,8 +83,45 @@ function handleResult(resultData) {
         // Append the row created to the table body, which will refresh the page
         movieTableBodyElement.append(rowHTML);
     }
-}
+        let sortByTitle = jQuery("#sorting");
+        
+        var sortByTitleLink = "Sort by: <a href='movie_list.html?title=" + title + "&year=" + year + "&limit=" + limit + "&offset=" + offset;
+        sortByTitleLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        sortByTitleLink += "&letter=" + letter + "&order=asc_title'>Ascending Title</a>, ";
+        sortByTitleLink += "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=" + limit + "&offset=" + offset;
+        sortByTitleLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        sortByTitleLink += "&letter=" + letter + "&order=desc_title'>Descending Title</a>, ";
+        sortByTitleLink += "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=" + limit + "&offset=" + offset;
+        sortByTitleLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        sortByTitleLink += "&letter=" + letter + "&order=asc_rating'>Ascending Rating</a>, ";
+        sortByTitleLink += "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=" + limit + "&offset=" + offset;
+        sortByTitleLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
+        sortByTitleLink += "&letter=" + letter + "&order=desc_rating'>Descending Rating</a>";
+        
+        sortByTitle.append(sortByTitleLink);
+        
+        /*
+        function myFunction() {
+            document.getElementById("sortByTitle").classList.toggle("show");
+        }
 
+        window.onclick = function(event) {
+        	  if (!event.target.matches('.dropbtn')) {
+
+        	    var dropdowns = document.getElementsById("sortByTitle");
+        	    var i;
+        	    for (i = 0; i < dropdowns.length; i++) {
+        	      var openDropdown = dropdowns[i];
+        	      if (openDropdown.classList.contains('show')) {
+        	        openDropdown.classList.remove('show');
+        	      }
+        	    }
+        	  }
+        }
+        
+}
+*/
+}
 let title = getParameterByName('title');
 let year = getParameterByName('year');
 let director = getParameterByName('director');
@@ -92,6 +129,9 @@ let starName = getParameterByName('starName');
 let genre = getParameterByName('genre');
 let genreId = getParameterByName('genreId');
 let letter = getParameterByName('letter'); 
+let order = getParameterByName('order');
+let limit = getParameterByName('limit');
+let offset = getParameterByName('offset');
 
 /*
 var win = window.open();
@@ -107,6 +147,6 @@ win.close();
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
-    url: "MovieListServlet?title=" +title +"&year=" +year +"&director=" +director +"&starName=" +starName +"&genre=" +genre + "&genreId=" +genreId + "&letter=" +letter, // Setting request url, which is mapped by StarsServlet in Stars.java
+    url: "MovieListServlet?title=" +title +"&year=" +year +"&director=" +director +"&starName=" +starName +"&genre=" +genre + "&genreId=" +genreId + "&letter=" +letter + "&order=" +order + "&limit=" +limit + "&offset=" +offset, // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });

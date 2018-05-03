@@ -12,7 +12,7 @@ function handleGenreResult(resultData) {
 	            rowHTML +=
 	                "<td>" +
 	                // Add a link to single-star.html with id passed with GET url parameter
-	                '<a href="movie_list.html?genre=' + resultData[i+j]['genre'] + '">'
+	                '<a href="movie_list.html?genre=' + resultData[i+j]['genre'] + "&limit=10&offset=0'>"
 	                + resultData[i+j]["genre"] +     // display star_name for the link text
 	                '</a>' +
 	                "</td>";
@@ -33,13 +33,13 @@ function handleGenreResult(resultData) {
     					{
     					rowHTML += "</tr><tr>";
     					}
-    				rowHTML += "<td><a href='movie_list.html?letter=" + letterArray[i] + "'>"
+    				rowHTML += "<td><a href='movie_list.html?letter=" + letterArray[i] + "&limit=10&offset=0'>";
     				rowHTML += letterArray[i] + "</a></td>";
     			}
     			rowHTML += "</tr><tr>";
     			for(let i = 0; i < numberArray.length; i++)
     				{
-    				rowHTML += "<td><a href='movie_list.html?letter=" + numberArray[i] + "'>"
+    				rowHTML += "<td><a href='movie_list.html?letter=" + numberArray[i] + "&limit=10&offset=0'>";
     				rowHTML += numberArray[i] + "</a></td>";
     				}
     			table2.append(rowHTML);
