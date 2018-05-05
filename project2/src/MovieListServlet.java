@@ -88,7 +88,7 @@ public class MovieListServlet extends HttpServlet {
 			query += "join ratings on movies.id = ratings.movieId ";
 			query += "join genres_in_movies on movies.id = genres_in_movies.movieId ";
 			query += "join genres on genres_in_movies.genreId = genres.id ";
-			query += "group by movies.id";
+			query += "group by movies.id ";
 			query += sortBy;
 			query += "limit " + limit + " offset " + offset;
 			}
