@@ -62,10 +62,10 @@ function handleResult(resultData) {
         rowHTML += "<th>" + resultData[i]["title"] + "</th>";
         rowHTML += "<th>" + resultData[i]["quantity"] + "</th>";
         rowHTML += "<th>";
-        rowHTML += "<a href='view-cart.html?increment="+resultData[i]["title"] +"'>+</a>";
+        rowHTML += "<a href='view_cart.html?increment="+resultData[i]["title"] +"'>+</a>";
         rowHTML += "</th>";
         rowHTML += "<th>";
-		rowHTML += "<a href='view-cart.html?decrement="+resultData[i]["title"] +"'>-</a>";
+		rowHTML += "<a href='view_cart.html?decrement="+resultData[i]["title"] +"'>-</a>";
 		rowHTML += "</th>";
         //rowHTML += "<th>" + resultData[i]["starredMovies"] + "</th>";
         rowHTML += "</tr>";
