@@ -41,13 +41,15 @@ public class SingleStarServlet extends HttpServlet {
 		try {
 			Connection database = dataSource.getConnection();
 
-			String query = "select stars.name, stars.birthYear, group_concat(movies.title) as starredMovies from stars ";
+			String query = "select stars.name, any_value(stars.birthYear) as birthyear, group_concat(movies.title) as starredMovies from stars ";
 			query += " join stars_in_movies on stars.id = stars_in_movies.starId";
 			query += " join movies on movies.id = stars_in_movies.movieId";
-			query += " where stars.name LIKE '" + name + "'";
+			query += " group by stars.name";
+			query += " having stars.name LIKE '" + name + "'";
 
 			Statement statement = database.createStatement();
 			
+			//ResultSet rs = statement.executeQuery(query);
 			ResultSet rs = statement.executeQuery(query);
 
 			JsonArray jsonArray = new JsonArray();

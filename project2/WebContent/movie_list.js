@@ -18,11 +18,18 @@ function getParameterByName(target) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-/**
- * Handles the data returned by the API, read the jsonObject and populate data into html elements
- * @param resultData jsonObject
- */
 
+//if click the add to cart button
+function addToCart(m_id, m_name) {
+	alert(m_id);
+    console.log("adding to shopping cart");
+    //event.preventDefault();
+    jQuery.get(
+        "CartServlet?movieid=" + m_id + "&movietitle=" + m_name,
+        jQuery(".addToCart").serialize());
+    alert("CartServlet?movieid=" + m_id + "&movietitle=" + m_name,
+        jQuery(".addToCart").serialize());
+}
 
 function handleResult(resultData) {
 	/*
@@ -46,7 +53,7 @@ function handleResult(resultData) {
     for (let i = 0; i < parseInt(resultData[0]["limit"]); i++) {
         let rowHTML = "";
         rowHTML += "<tr>";
-        rowHTML += "<th>" + resultData[i]["movieId"] + "</th>";
+        rowHTML += "<th><button type='button' class='btn btn-outline-primary' id = '" + resultData[i]["movieId"] + "' name='" + resultData[i]["movieTitle"] +"'>Add to Cart</button>" + resultData[i]["movieId"] + "</th>";
         rowHTML += "<th><a href='single-movie.html?id=" + resultData[i]["movieId"]; 
         rowHTML += "'>" + resultData[i]["movieTitle"] + "</a></th>";
         rowHTML += "<th>" + resultData[i]["movieYear"] + "</th>";
@@ -96,7 +103,6 @@ function handleResult(resultData) {
         sortByTitleLink += "<a href='movie_list.html?title=" + title + "&year=" + year + "&limit=" + limit + "&offset=" + offset;
         sortByTitleLink += "&director=" + director + "&starName=" +  starName + "&genre=" + genre + "&genreId" + genreId;
         sortByTitleLink += "&letter=" + letter + "&order=desc_rating'>Descending Rating</a>";
-        console.log(sortByTitleLink);
         sortByTitle.append(sortByTitleLink);
         
         let moviesPerPage = jQuery("#listNum");
@@ -137,27 +143,12 @@ function handleResult(resultData) {
         prevLink += "&letter=" + letter + "&order=" + order + "'>Previous Page</a> ";
         prev.append(prevLink);
         
-        /*
-        function myFunction() {
-            document.getElementById("sortByTitle").classList.toggle("show");
-        }
-
-        window.onclick = function(event) {
-        	  if (!event.target.matches('.dropbtn')) {
-
-        	    var dropdowns = document.getElementsById("sortByTitle");
-        	    var i;
-        	    for (i = 0; i < dropdowns.length; i++) {
-        	      var openDropdown = dropdowns[i];
-        	      if (openDropdown.classList.contains('show')) {
-        	        openDropdown.classList.remove('show');
-        	      }
-        	    }
-        	  }
-        }
-        
-}
-*/
+        alert("coming soon!");
+        //jQuery("#movie_table_body").on("click", ".btn", addToCart(this.id,this.name));
+        $(document).on("click", '.btn', function(event) {
+        	addToCart(this.id,this.name);
+        	});
+     	
 }
 let title = getParameterByName('title');
 let year = getParameterByName('year');
@@ -170,16 +161,7 @@ let order = getParameterByName('order');
 let limit = getParameterByName('limit');
 let offset = getParameterByName('offset');
 
-/*
-var win = window.open();
-win.document.write(title);
-win.document.write(year);
-win.document.write(director);
-win.document.write(starName);
-win.print();
-win.close();
-*/
-
+        
 //Makes the HTTP GET request and registers on success callback function handleResult
 jQuery.ajax({
     dataType: "json",  // Setting return data type
@@ -187,3 +169,12 @@ jQuery.ajax({
     url: "MovieListServlet?title=" +title +"&year=" +year +"&director=" +director +"&starName=" +starName +"&genre=" +genre + "&genreId=" +genreId + "&letter=" +letter + "&order=" +order + "&limit=" +limit + "&offset=" +offset, // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });
+//$(document).on("click", ".btn", addToCart(this.id,this.name));
+
+
+
+
+
+
+
+
