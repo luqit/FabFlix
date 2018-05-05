@@ -35,9 +35,9 @@ public class CartServlet extends HttpServlet {
 		
 		user.addMovie("Inception");
 		
-		if(decrementTitle != "null" || !decrementTitle.isEmpty())
+		if(!decrementTitle.equals("null") && !decrementTitle.isEmpty())
 			user.removeMovie(decrementTitle);
-		if(incrementTitle != "null" || !incrementTitle.isEmpty())
+		if(!incrementTitle.equals("null") && !incrementTitle.isEmpty())
 			user.addMovie(decrementTitle);
 		HashMap<String, Integer> cart = user.getCart();
 			
