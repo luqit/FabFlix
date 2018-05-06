@@ -13,47 +13,47 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 //
-@WebServlet(name = "LoginServlet", urlPatterns = "/api/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "BillingServlet", urlPatterns = "/api/billing")
+public class BillingServlet extends HttpServlet {
     private static final long serialVersionUID = 5L;
     @Resource(name = "jdbc/moviedb")
     private DataSource dataSource;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String id = request.getParameter("cardid");
+        String fname = request.getParameter("firstname");
+        String lname = request.getParameter("lastname");
+        String date = request.getParameter("edate");
         
         try {
         	// create database connection
 	     	Connection connection = dataSource.getConnection();
 	     	// prepare query
-	     	String query = "select * from customers where email=? and password=?";
-	     	// prepare statement
+	     	String query = "select * from creditcards where id=? and firstName=? and lastName=? and expiration=?";
 	     	PreparedStatement statement = connection.prepareStatement(query);
-	     	statement.setString(1, username);
-	     	statement.setString(2, password);
-	     	System.out.println("Login Servlet:" + username);
-	     	// execute query
+	     	statement.setString(1, id);
+	     	statement.setString(2, fname);
+	     	statement.setString(3, lname);
+	     	statement.setString(4, date);
+	     	System.out.println("Billing Servlet");
 	     	ResultSet resultSet = statement.executeQuery();
 	
-	        /* This example only allows username/password to be test/test
-	        /  in the real project, you should talk to the database to verify username/password
-	        */
 	        if (resultSet.next()) {
-	            // Login success:
+	          
+	            request.getSession().setAttribute("billing", new Billing(id,fname,lname,date));
 	
-	            // set this user into the session
-	            request.getSession().setAttribute("user", new User(username));
-	
+	            
+	            
+	            
+	            
 	            JsonObject responseJsonObject = new JsonObject();
 	            responseJsonObject.addProperty("status", "success");
 	            responseJsonObject.addProperty("message", "success");	
 	            response.getWriter().write(responseJsonObject.toString());
 	        } else {
-	            // Login fail
 	            JsonObject responseJsonObject = new JsonObject();
 	            responseJsonObject.addProperty("status", "fail");
-	            responseJsonObject.addProperty("message", "invalid user information!");
+	            responseJsonObject.addProperty("message", "Invalid credit card information! Please enter again!");
 	            response.getWriter().write(responseJsonObject.toString());
 	        }
 	    }

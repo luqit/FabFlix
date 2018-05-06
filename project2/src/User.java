@@ -19,23 +19,5 @@ public class User {
         return this.username;
     }
     
-    public HashMap<String, Integer> getCart(){
-    	return this.cart;
-    }
-    
-    public void addMovie(String title) {
-    	if(cart.containsKey(title)) {
-    		cart.put(title, cart.get(title) + 1);
-    	}
-    	else {
-    		cart.put(title, 1);
-    	}
-    }
-    
-    public void removeMovie(String title) {
-    	if(cart.get(title) != null || cart.get(title) != 0)
-    		cart.put(title, cart.get(title) - 1);
-    }
-    
 
 }

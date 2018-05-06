@@ -1,28 +1,38 @@
 public class MovieInCart
 {
-    public String movieId;
-    public String movieTitle;
-    public int quantity;
+    private String movieId;
+    private String movieTitle;
     
 
     public MovieInCart()
     {
     }
 
-    public MovieInCart(String aProductCode, String aTitle, int aQuantity)
+    public MovieInCart(String aProductCode, String aTitle)
     {
-        movieId = aProductCode;        
-        movieTitle = aTitle;
-        quantity = aQuantity;
+        movieId = new String(aProductCode);        
+        movieTitle = new String(aTitle);
     }
 
-// Make get/set methods so the attributes will appear
-// as bean attributes.
 
-    public String getMovie() { return movieId; }
+    @Override
+    public int hashCode() {
+    	return movieId.hashCode();
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+    	if (o == this) return true;
+        if (!(o instanceof MovieInCart) || o == null) {
+            return false;
+        }
+        MovieInCart o1 = (MovieInCart) o;
+
+        return o1.movieId.equals(movieId) && o1.movieTitle.equals(movieTitle);
+    }
+    
+    public String getId() { return movieId; }
 
     public String getTitle() { return movieTitle; }
 
-    public int getQuantity() { return quantity; }
-    public void setQuantity(int aQuantity) { quantity = aQuantity; }
 }

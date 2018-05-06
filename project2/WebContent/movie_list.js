@@ -20,15 +20,15 @@ function getParameterByName(target) {
 
 
 //if click the add to cart button
-function addToCart(m_id, m_name) {
-	alert(m_id);
+function addToCart(event, m_id, m_name) {
     console.log("adding to shopping cart");
     //event.preventDefault();
-    jQuery.get(
-        "CartServlet?movieid=" + m_id + "&movietitle=" + m_name,
-        jQuery(".addToCart").serialize());
-    alert("CartServlet?movieid=" + m_id + "&movietitle=" + m_name,
-        jQuery(".addToCart").serialize());
+    jQuery.ajax({
+    	dataType: "json",
+    	method: "GET",
+        url: "AddServlet?movieid=" + m_id + "&movietitle=" + m_name
+    });
+    jQuery(".addToCart").serialize();
 }
 
 function handleResult(resultData) {
@@ -143,10 +143,8 @@ function handleResult(resultData) {
         prevLink += "&letter=" + letter + "&order=" + order + "'>Previous Page</a> ";
         prev.append(prevLink);
         
-        alert("coming soon!");
-        //jQuery("#movie_table_body").on("click", ".btn", addToCart(this.id,this.name));
         $(document).on("click", '.btn', function(event) {
-        	addToCart(this.id,this.name);
+        	addToCart(event, this.id,this.name);
         	});
      	
 }
