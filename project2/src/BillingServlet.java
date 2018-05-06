@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Map;
 
 //
 @WebServlet(name = "BillingServlet", urlPatterns = "/api/billing")
@@ -26,7 +27,6 @@ public class BillingServlet extends HttpServlet {
         String date = request.getParameter("edate");
         
         try {
-        	// create database connection
 	     	Connection connection = dataSource.getConnection();
 	     	// prepare query
 	     	String query = "select * from creditcards where id=? and firstName=? and lastName=? and expiration=?";
@@ -38,14 +38,22 @@ public class BillingServlet extends HttpServlet {
 	     	System.out.println("Billing Servlet");
 	     	ResultSet resultSet = statement.executeQuery();
 	
-	        if (resultSet.next()) {
-	          
+	        if (resultSet.next()) {	          
 	            request.getSession().setAttribute("billing", new Billing(id,fname,lname,date));
-	
-	            
-	            
-	            
-	            
+//	            String userid = (String) request.getSession().getAttribute("userId");
+//	            ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("ShoppingCart");
+//	            for(Map.Entry<MovieInCart, Integer> entry: cart.getItems().entrySet()) {				
+//	    			MovieInCart item = entry.getKey();
+//	    			Integer quantity = new Integer(entry.getValue());
+//	    			String mid = item.getId();
+//		            String query3 = "INSERT INTO sales where customerId=? and movieId=? and date=?";
+//		            System.out.println("query prepared");
+//			     	PreparedStatement statement3 = connection.prepareStatement(query3);
+//			     	statement3.setString(1, userid);
+//			     	statement3.setString(2, mid);
+//			     	statement3.setString(3, "2018-05-06");
+//			     	statement3.executeQuery();
+//	            }	            
 	            JsonObject responseJsonObject = new JsonObject();
 	            responseJsonObject.addProperty("status", "success");
 	            responseJsonObject.addProperty("message", "success");	
