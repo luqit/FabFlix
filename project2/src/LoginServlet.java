@@ -23,41 +23,50 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         
-        try {
-        	// create database connection
+        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+        
+        JsonObject responseJsonObject = new JsonObject();
+        // verify the recaptcha response
+		try {      	
+            RecaptchaVerifyUtils.verify(gRecaptchaResponse);             
+            responseJsonObject.addProperty("gstatus", "success");
+            //response.getWriter().write(responseJsonObject.toString());
+        }
+        catch (Exception e) {
+            responseJsonObject.addProperty("gstatus", "fail");
+            responseJsonObject.addProperty("gmessage", e.getMessage());
+            response.getWriter().write(responseJsonObject.toString());
+            return;
+        }  
+		try {
 	     	Connection connection = dataSource.getConnection();
-	     	// prepare query
 	     	String query = "select * from customers where email=? and password=?";
-	     	// prepare statement
 	     	PreparedStatement statement = connection.prepareStatement(query);
 	     	statement.setString(1, username);
 	     	statement.setString(2, password);
-	     	System.out.println("Login Servlet:" + username);
-	     	// execute query
+	     	System.out.println("Login Servlet:" + username);	     	
 	     	ResultSet resultSet = statement.executeQuery();
 	
-	        /* This example only allows username/password to be test/test
-	        /  in the real project, you should talk to the database to verify username/password
-	        */
 	        if (resultSet.next()) {
-
 	            request.getSession().setAttribute("user", new User(username));
 	            String userId = resultSet.getString("id");
 	            request.getSession().setAttribute("userId", userId);
-	            JsonObject responseJsonObject = new JsonObject();
+	            //JsonObject responseJsonObject = new JsonObject();
 	            responseJsonObject.addProperty("status", "success");
 	            responseJsonObject.addProperty("message", "success");	
 	            response.getWriter().write(responseJsonObject.toString());
 	        } else {
 	            // Login fail
-	            JsonObject responseJsonObject = new JsonObject();
+	            //JsonObject responseJsonObject = new JsonObject();
 	            responseJsonObject.addProperty("status", "fail");
 	            responseJsonObject.addProperty("message", "invalid user information!");
+	            System.out.println("all error info:" + responseJsonObject.toString());
 	            response.getWriter().write(responseJsonObject.toString());
 	        }
 	    }
         catch(Exception e) {
 			e.printStackTrace();
+			return;
 		}
     }
 }

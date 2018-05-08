@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Login to Fablix</title>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body>
 <h2>Login to Fablix</h2>
@@ -15,12 +16,13 @@
     <br>
     <label><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="password">
-    <br>
-    <input type="submit" value="Login">
+    <br>  
+    <div class="g-recaptcha" data-sitekey="6LcB1VcUAAAAANZyUhy3GcwIZWPUgSSBaMoE4PVB"></div>  
+    <input type="submit" value="Login"> 
 </form>
 
 <div id="login_error_message"></div>
-
+<div id="g_error_message"></div>
 <!-- include jQuery-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- include our own JS file -->
