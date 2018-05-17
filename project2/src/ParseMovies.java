@@ -9,6 +9,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.mysql.jdbc.StringUtils;
+
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -33,7 +35,7 @@ public class ParseMovies {
 
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
-            dom = db.parse("test.xml");
+            dom = db.parse("mains243.xml");
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
         } catch (SAXException se) {
@@ -58,24 +60,35 @@ public class ParseMovies {
                     Element moviesByd = (Element) el.item(i);
                     String director = getTextValue(moviesByd, "dirname");
                     NodeList movie = (NodeList) moviesByd.getElementsByTagName("film");
-                    for (int j = 0; j < movie.getLength(); j++) {
+                    for (int j = 0; movie.item(j) != null && j < movie.getLength(); j++) {
                     	 String title = getTextValue((Element) movie.item(j), "t");
                          String mid = getTextValue((Element) movie.item(j), "fid");                     
-                         int year = getIntValue((Element) movie.item(j), "year");
+                         String year = getTextValue((Element) movie.item(j), "year");
                          String genre = getTextValue((Element) movie.item(j), "cat");
+
+                         String querymax = "SELECT max(id) as m from movies";
+ 	                   	 Statement statm = connection.createStatement();
+ 	                     ResultSet maxid = statm.executeQuery(querymax);
+ 	                   	 maxid.next();
+ 	                   	 System.out.println(maxid.getString("m"));
+ 	                   	 String oldid = maxid.getString("m");
+ 	                	 System.out.println(Integer.parseInt(oldid.substring(2, oldid.length()-1))+1);
+ 	                   	 mid = "tt" + Integer.toString((Integer.parseInt(oldid.substring(2, oldid.length()))+1));
+ 	                   	 
                          System.out.println(title);
                          System.out.println(mid);
                          System.out.println(director);
                          System.out.println(year);
                          System.out.println(genre);
-
+                         
                          //NodeList genres = (NodeList) moviesByd.getElementsByTagName("cat");
                          //insert into movies
 	                     String query = "SELECT * FROM movies where title=? and director=? and year=?";
 	                     PreparedStatement statement = connection.prepareStatement(query);
 	                     statement.setString(1, title);
 	                     statement.setString(2, director);
-	                     statement.setInt(3, year);
+	                     statement.setString(3, year);
+	                     
 	                     ResultSet rs1 = statement.executeQuery();
 	                     if(rs1.next()) {
 	                    	 System.out.println("This movie already exists in the database!");;
@@ -85,8 +98,20 @@ public class ParseMovies {
 	                    	 String queryIn = "INSERT INTO movies VALUES(?,?,?,?)";
 	                    	 PreparedStatement statement1 = connection.prepareStatement(queryIn);
 	                    	 statement1.setString(1, mid);
+	                    	 if(title == null) {
+	                    		 title = "unknown";
+	                    	 }
+	                    	 if(director == null) {
+	                    		 director = "unknown";
+	                    	 }
 	                         statement1.setString(2, title);
-	                         statement1.setInt(3, year);
+	                         if(!StringUtils.isStrictlyNumeric(year)) {
+		                    	 System.out.println("Year of the movie is not valid!");
+		                    	 statement1.setString(3, "1900");
+		                     }
+		                     else {
+		                    	 statement1.setString(3, year);
+		                     }	    	                        
 	                         statement1.setString(4, director);                       
 	                         statement1.executeUpdate();
 	                     }
@@ -130,14 +155,17 @@ public class ParseMovies {
         }catch (SQLException e) {
 			e.printStackTrace();
 		}        
-        
+        System.out.println("All movies are parsed!");
     }
  
     private String getTextValue(Element ele, String tagName) {
-        String textVal = null;
+    	String textVal = null;
         NodeList nl = ele.getElementsByTagName(tagName);
         if (nl != null && nl.getLength() > 0) {
             Element el = (Element) nl.item(0);
+            if(el.getFirstChild() == null) {
+            	return textVal;
+            }
             textVal = el.getFirstChild().getNodeValue();
         }
 

@@ -33,7 +33,7 @@ public class ParseCasts {
 
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
-            dom = db.parse("casts.xml");
+            dom = db.parse("casts124.xml");
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
         } catch (SAXException se) {
@@ -72,7 +72,20 @@ public class ParseCasts {
 	                if(rs11.next()) {
 	                	mid = rs11.getString("id");}
 	                else {
-	                	mid = "temporary";
+	                	String querymax = "SELECT max(id) as m from movies";
+	                   	Statement statm = connection.createStatement();
+	                    ResultSet maxid = statm.executeQuery(querymax);
+	                   	maxid.next();
+	                	String oldid = maxid.getString("m");
+	                	System.out.println(Integer.parseInt(oldid.substring(2, oldid.length()-1))+1);
+	                   	mid = "tt" + Integer.toString((Integer.parseInt(oldid.substring(2, oldid.length()))+1));
+	                   	String queryIn = "INSERT INTO movies VALUES(?,?,?,?)";
+	                   	PreparedStatement statement1 = connection.prepareStatement(queryIn);
+	                   	statement1.setString(1, mid);
+	                   	statement1.setString(2, "unknown");
+	                   	statement1.setString(3, "0000");
+	                   	statement1.setString(4, "unknown");
+	                   	statement1.executeUpdate();
 	                }
 	                
 	                String querys = "SELECT * FROM stars where name=?";
@@ -93,6 +106,8 @@ public class ParseCasts {
 	                   	System.out.println(aid);
 	                   	String queryIn = "INSERT INTO stars VALUES(?,?,?)";
 	                    PreparedStatement statement0 = connection.prepareStatement(queryIn);
+	                    if(aname == null)
+	                    	aname = "unknown";
 	                    statement0.setString(1, aid);                    
 	                    statement0.setString(2, aname);
 	                    statement0.setNull(3, java.sql.Types.INTEGER);

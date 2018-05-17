@@ -9,6 +9,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.mysql.jdbc.StringUtils;
+
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -33,7 +35,7 @@ public class ParseStars {
 
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
-            dom = db.parse("actors.xml");
+            dom = db.parse("actors63.xml");
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
         } catch (SAXException se) {
@@ -57,7 +59,7 @@ public class ParseStars {
                 for (int i = 0; i < el.getLength(); i++) {
                     Element actor = (Element) el.item(i);
                     String aname = getTextValue(actor, "stagename");
-                    int byear = getIntValue(actor, "dob");
+                    String byear = getTextValue(actor, "dob");
                     
                     System.out.println(aname);
                     System.out.println(byear);                   
@@ -65,7 +67,7 @@ public class ParseStars {
 	                String query = "SELECT * FROM stars where name=? and birthYear=?";
 	                PreparedStatement statement = connection.prepareStatement(query);
 	                statement.setString(1, aname);
-	                statement.setInt(2, byear);	                
+	                statement.setString(2, byear);	                
 	                ResultSet rs1 = statement.executeQuery();
 	                
 	                if(rs1.next()) {
@@ -87,17 +89,19 @@ public class ParseStars {
 	                    PreparedStatement statement1 = connection.prepareStatement(queryIn);
 	                    statement1.setString(1, newid);                    
 	                    statement1.setString(2, aname);
-	                    if(byear == 0) {
+	                    if(byear == null || !StringUtils.isStrictlyNumeric(byear)) {
+	                    	//System.out.println("This birthyear is not valid!");
 	                    	statement1.setNull(3, java.sql.Types.INTEGER);
 	                    }
 	                    else {
-		                    statement1.setInt(3, byear);}
-		                    System.out.println(statement1);
+		                    statement1.setString(3, byear);}
+		                    //System.out.println(statement1);
 		                    statement1.executeUpdate();
 	                }
 	             }
               }       
-            }catch (SQLException e) {
+        System.out.println("All stars are parsed!");    
+        }catch (SQLException e) {
 			e.printStackTrace();}              
     }
  
