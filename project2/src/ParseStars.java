@@ -127,7 +127,6 @@ public class ParseStars {
         	return 0;
     }
  
-
     public static void main(String[] args) {
       
         ParseStars dpe = new ParseStars();

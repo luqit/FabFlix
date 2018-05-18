@@ -50,9 +50,11 @@ public class ParseMovies {
         String loginPasswd = "TIAN950130";
         String loginUrl = "jdbc:mysql://localhost:3306/moviedb";
         Element docEle = dom.getDocumentElement();
+        PreparedStatement statement1 = null;
 
         try {
         	Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
+        	
         	NodeList el = docEle.getElementsByTagName("directorfilms");
         	System.out.println(el);
             if (el != null && el.getLength() > 0) {
@@ -96,7 +98,7 @@ public class ParseMovies {
 	                     else{
 	                    	 System.out.println("Adding to the db now...");
 	                    	 String queryIn = "INSERT INTO movies VALUES(?,?,?,?)";
-	                    	 PreparedStatement statement1 = connection.prepareStatement(queryIn);
+	                    	 statement1 = connection.prepareStatement(queryIn);
 	                    	 statement1.setString(1, mid);
 	                    	 if(title == null) {
 	                    		 title = "unknown";
@@ -113,8 +115,9 @@ public class ParseMovies {
 		                    	 statement1.setString(3, year);
 		                     }	    	                        
 	                         statement1.setString(4, director);                       
-	                         statement1.executeUpdate();
+	                         statement1.executeUpdate();	                        
 	                     }
+	                     
 	                     //insert into genres
 	                     String queryg = "SELECT * FROM genres where name=?";
 	                     PreparedStatement statementg = connection.prepareStatement(queryg);
@@ -132,21 +135,21 @@ public class ParseMovies {
 	                    	 
 	                    	 System.out.println("Adding to the db now...");
 	                    	 String queryIn = "INSERT INTO genres VALUES(?,?)";
-	                    	 PreparedStatement statement1 = connection.prepareStatement(queryIn);
-	                    	 statement1.setInt(1, newid);
-	                         statement1.setString(2, genre);                
-	                         statement1.executeUpdate();
+	                    	 PreparedStatement statement5 = connection.prepareStatement(queryIn);
+	                    	 statement5.setInt(1, newid);
+	                         statement5.setString(2, genre);                
+	                         statement5.executeUpdate();
 	                         
 	                         queryIn = "INSERT INTO genres_in_movies VALUES(?,?)";
-	                         statement1 = connection.prepareStatement(queryIn);
-	                         statement1.setInt(1, newid);
-	                         statement1.setString(2, mid);
-	                         statement1.executeUpdate();
+	                         statement5 = connection.prepareStatement(queryIn);
+	                         statement5.setInt(1, newid);
+	                         statement5.setString(2, mid);
+	                         statement5.executeUpdate();
 	                         System.out.println("inserted in the gim");
 	                     }
 	                     else {
 	                    	 System.out.println("There is no genre for this movie");
-	                     }
+	                     }	                    
                     }
                 }
             }      	     
