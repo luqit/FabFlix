@@ -66,17 +66,14 @@ function handleResult(resultData) {
         rowHTML += "<th>" + resultData[i]["title"] + "</th>";
         rowHTML += "<th><from><input placeholder='" + resultData[i]["quantity"] + "' id='" + resultData[i]["id"] + "' name='" + resultData[i]["title"] + "'></input></th>";
         rowHTML += "<th>";
-<<<<<<< HEAD:project2/WebContent/view_cart.js
         rowHTML += "<a href='view_cart.html?increment="+resultData[i]["title"] +"'>+</a>";
         rowHTML += "</th>";
         rowHTML += "<th>";
 		rowHTML += "<a href='view_cart.html?decrement="+resultData[i]["title"] +"'>-</a>";
 		rowHTML += "</th>";
         //rowHTML += "<th>" + resultData[i]["starredMovies"] + "</th>";
-=======
         rowHTML += "<button class='btn btn-outline-primary' id='" + resultData[i]["id"] + "' name='" + resultData[i]["title"] + "'>Remove</button>";
         rowHTML += "</th>";
->>>>>>> 8460c66193191c67a95095d8d735806661d38a8b:project2/WebContent/cart.js
         rowHTML += "</tr>";
 
         // Append the row created to the table body, which will refresh the page
