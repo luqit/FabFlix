@@ -24,29 +24,67 @@ function handleResult(resultData) {
 
     // Concatenate the html tags with resultData jsonObject to create table rows
     for (let i = 0; i < Math.min(10, resultData.length); i++) {
-        let rowHTML = "";
+    	let rowHTML = "";
         rowHTML += "<tr>";
-        rowHTML += "<td>" + resultData[i]["movie_title"] + "</td>";
-        rowHTML += "<td>" + resultData[i]["movie_year"] + "</td>";
-        rowHTML += "<td>" + resultData[i]["movie_director"] + "</td>";
-        rowHTML += "<td>" + resultData[i]["genreName"] + "</td>";
+        rowHTML += "<th>" + resultData[i]["movieId"] + "</th>";
+        rowHTML += "<th><a href='single-movie.html?id=" + resultData[i]["movieId"]; 
+        rowHTML += "&title=" + resultData[i]["movieTitle"] + "&year=" + resultData[i]["year"];
+        rowHTML += "&director=" + resultData[i]["movieDirector"] + resultData[i]["genreNames"];
+        rowHTML += "&starNames=" + resultData[i]["starNames"] + "&rating=" + resultData[i]["rating"];
+        rowHTML += "'>" + resultData[i]["movieTitle"] + "</a></th>";
+        rowHTML += "<th>" + resultData[i]["movieYear"] + "</th>";
+        rowHTML += "<th>" + resultData[i]["movieDirector"] + "</th>";
+        rowHTML += "<th>";
+        var genre = resultData[i]["genreNames"];
+        var genreArray = genre.split(',');
+        for(var z = 0; z < genreArray.length; z++)
+        	{
+        	if(z == (genreArray.length-1))
+        		{
+        		rowHTML += genreArray[z];
+        		break;
+        		}	
+        	rowHTML += genreArray[z] + ", ";
+        	}
+        rowHTML += "</th>";
+        rowHTML += "<th>";
+        var star = resultData[i]["starNames"];
+        var starArray = star.split(',');
+        for(var x = 0; x < starArray.length; x++)
+        	{
+        	if(x == (starArray.length-1))
+        		{
+        		rowHTML += "<a href='single-star.html?starName=" + starArray[x] + "'>" + starArray[x] + "</a>";
+        		break;
+        		}	
+        	rowHTML += "<a href='single-star.html?starName=" + starArray[x] + "'>" + starArray[x] + "</a>, ";
+        	}
+        rowHTML += "</th>";
+        rowHTML += "<th>" + resultData[i]["rating"] + "</th>";
         rowHTML += "</tr>";
+
+        // Append the row created to the table body, which will refresh the page
         movieTableBodyElement.append(rowHTML);
-        console.log(rowHTML);
     }
 }
 
-/**
- * Once this .js is loaded, following scripts will be executed by the browser\
- */
 
-// Get id from URL
-let genreId = getParameterByName('genreid');
+let method = getParameterByName('by');
+console.log(method);
+let title = getParameterByName('title');
+let year = getParameterByName('year');
+let director = getParameterByName('director');
+let starName = getParameterByName('starName');
+let genre = getParameterByName('genre');
+let genrename = getParameterByName('genreid');
+let initial = getParameterByName('init');
+
+
 
 // Makes the HTTP GET request and registers on success callback function handleResult
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
-    url: "api/browse?genreid=" + genreId, // Setting request url, which is mapped by StarsServlet in Stars.java
+    url: "api/browse?by=" + method + "&genreid=" + genrename + "&init=" + initial, // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });

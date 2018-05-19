@@ -7,19 +7,24 @@ function handleLoginResult(resultDataString) {
 
     console.log("handle login response");
     console.log(resultDataJson);
-    console.log(resultDataJson["status"]);
-
+    console.log("status:" +resultDataJson["status"]);
+    console.log("gstatus:" +resultDataJson["gstatus"]);
     // If login success, redirect to index.html page
-    if (resultDataJson["status"] === "success") {
-        window.location.replace("mainPage.html");
+    if (resultDataJson["status"] === "success" && resultDataJson["gstatus"] === "success") {
+        window.location.replace("index.html");
     }
     // If login fail, display error message on <div> with id "login_error_message"
     else {
-
-        console.log("show error message");
-        console.log(resultDataJson["message"]);
-        jQuery("#login_error_message").text(resultDataJson["message"]);
+    	console.log("errors!")
+        if(resultDataJson["message"] != null){
+        	console.log("show error message:");
+            console.log(resultDataJson["message"]);
+        	jQuery("#login_error_message").text(resultDataJson["message"]);
+        }
+        if(resultDataJson["gmessage"] != null)
+        	jQuery("#g_error_message").text(resultDataJson["gmessage"]);
     }
+
 }
 
 /**
@@ -32,7 +37,6 @@ function submitLoginForm(formSubmitEvent) {
     //   which will cause the page to refresh
     //   see jQuery reference for details: https://api.jquery.com/submit/
     formSubmitEvent.preventDefault();
-    console.log("prevent");
 
     jQuery.post(
         "api/login",

@@ -6,8 +6,9 @@
 
 
 <Resource url="jdbc:mysql://localhost:3306/moviedb" 
-password="Cookiesncream123!" 
+password="TIAN950130" 
 username="root" 
+validationQuery="select 1"
 type="javax.sql.DataSource" 
 driverClassName="com.mysql.jdbc.Driver" 
 auth="Container" 

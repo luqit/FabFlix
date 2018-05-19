@@ -18,6 +18,16 @@ function getParameterByName(target) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+function addToCart(event, m_id, m_name) {
+    console.log("adding to shopping cart");
+    //event.preventDefault();
+    jQuery.ajax({
+    	dataType: "json",
+    	method: "GET",
+        url: "AddServlet?movieid=" + m_id + "&movietitle=" + m_name
+    });
+    jQuery(".addToCart").serialize();
+}
 
 /**
  * Handles the data returned by the API, read the jsonObject and populate data into html elements
@@ -46,7 +56,7 @@ function handleResult(resultData) {
     for (let i = 0; i < Math.min(10, resultData.length); i++) {
         let rowHTML = "";
         rowHTML += "<tr>";
-        rowHTML += "<th>" + resultData[i]["movieId"] + "</th>";
+        rowHTML += "<th>" + "<button type='button' class='btn btn-outline-primary' id = '" + resultData[i]["movieId"] + "' name='" + resultData[i]["movieTitle"] +"'>Add to Cart</button>" + resultData[i]["movieId"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movieTitle"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movieYear"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movieDirector"] + "</th>";
@@ -82,6 +92,12 @@ function handleResult(resultData) {
         // Append the row created to the table body, which will refresh the page
         movieTableBodyElement.append(rowHTML);
     }
+    
+    alert("coming soon!");
+    //jQuery("#movie_table_body").on("click", ".btn", addToCart(this.id,this.name));
+    $(document).on("click", '.btn', function(event) {
+    	addToCart(event, this.id,this.name);
+    	});
 }
 
 let movieId = getParameterByName('id');

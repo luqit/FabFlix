@@ -31,62 +31,74 @@ function getParameterByName(target) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-/**
- * Handles the data returned by the API, read the jsonObject and populate data into html elements
- * @param resultData jsonObject
- */
+//if click the remove button
+function addToCart(event, m_id, m_name,value) {
+    console.log("add a movie");
+    //event.preventDefault();
+    jQuery.ajax({
+    	dataType: "json",
+    	method: "GET",
+        url: "AddServlet?movieid=" + m_id + "&movietitle=" + m_name + "number=" + value  
+    });
+    jQuery("input").serialize();
+}
+
+function remove(event, m_id, m_name) {
+    console.log("remove a movie");
+    //event.preventDefault();
+    jQuery.ajax({
+    	dataType: "json",
+    	method: "GET",
+        url: "RemoveServlet?id=" + m_id + "&name=" + m_name
+    });
+    jQuery(".btn").serialize();
+}
 
 function handleResult(resultData) {
-	/*
-    console.log("handleResult: populating star info from resultData");
-
-    // populate the star info h3
-    // find the empty h3 body by id "star_info"
-    let starInfoElement = jQuery("#star_info");
-    
-    // append two html <p> created to the h3 body, which will refresh the page
-    starInfoElement.append("<p>Star Name: " + resultData[0]["star_name"] + "</p>" +
-        "<p>Date Of Birth: " + resultData[0]["star_dob"] + "</p>");
-
-    console.log("handleResult: populating movie table from resultData");
 	
-    // Populate the star table
-    // Find the empty table body by id "movie_table_body"
-	*/
-    let movieTableBodyElement = jQuery("#cart_info");
+    let movieTableBodyElement = jQuery("#cart_body");
 
     // Concatenate the html tags with resultData jsonObject to create table rows
     for (let i = 0; i < Math.min(10, resultData.length); i++) {
         let rowHTML = "";
         rowHTML += "<tr>";
+        rowHTML += "<th>" + resultData[i]["id"] + "</th>";
         rowHTML += "<th>" + resultData[i]["title"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["quantity"] + "</th>";
+        rowHTML += "<th><from><input placeholder='" + resultData[i]["quantity"] + "' id='" + resultData[i]["id"] + "' name='" + resultData[i]["title"] + "'></input></th>";
         rowHTML += "<th>";
+<<<<<<< HEAD:project2/WebContent/view_cart.js
         rowHTML += "<a href='view_cart.html?increment="+resultData[i]["title"] +"'>+</a>";
         rowHTML += "</th>";
         rowHTML += "<th>";
 		rowHTML += "<a href='view_cart.html?decrement="+resultData[i]["title"] +"'>-</a>";
 		rowHTML += "</th>";
         //rowHTML += "<th>" + resultData[i]["starredMovies"] + "</th>";
+=======
+        rowHTML += "<button class='btn btn-outline-primary' id='" + resultData[i]["id"] + "' name='" + resultData[i]["title"] + "'>Remove</button>";
+        rowHTML += "</th>";
+>>>>>>> 8460c66193191c67a95095d8d735806661d38a8b:project2/WebContent/cart.js
         rowHTML += "</tr>";
 
         // Append the row created to the table body, which will refresh the page
         movieTableBodyElement.append(rowHTML);
     }
+    
+    $(document).on("input porpertychange", 'input', function(event) {
+    	addToCart(event, this.id,this.name,this.value);
+    	});
+    
+    $(document).on("click", '.btn-outline-primary', function(event) {
+    	remove(event, this.id,this.name);
+    	jQuery("#"+this.id).attr('placeholder', '0');
+    	jQuery("#"+this.id).value = 0;
+    	});
 }
 
-/**
- * Once this .js is loaded, following scripts will be executed by the browser\
- */
 
-// Get id from URL
-let decrement = getParameterByName('decrement');
-let increment = getParameterByName('increment');
 
-// Makes the HTTP GET request and registers on success callback function handleResult
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
-    url: "CartServlet?decrement=" + decrement + "&increment=" + increment, // Setting request url, which is mapped by StarsServlet in Stars.java
+    url: "ShowCartServlet", // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });

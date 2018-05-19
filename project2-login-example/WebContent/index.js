@@ -10,10 +10,11 @@ function handleStarResult(resultData) {
     	if(i % 4 == 0){
     		let rowHTML = "<tr>";
     		for (let j = 0; j < 4 && i+j < resultData.length; j++) {
+    			console.log(resultData[i+j]['genreName']);
 	            rowHTML +=
 	                "<td>" +
 	                // Add a link to single-star.html with id passed with GET url parameter
-	                '<a href="browse.html?genreid=' + resultData[i+j]['genreId'] + '">'
+	                '<a href="browse.html?by=genre&genreid=' + resultData[i+j]['genreName'] + "&init=" + '">'
 	                + resultData[i+j]["genreName"] +     // display star_name for the link text
 	                '</a>' +
 	                "</td>";
@@ -31,7 +32,7 @@ function handleStarResult(resultData) {
           let rowHTML = "<tr>";
           for (let j = 0; j < 13; j++) {
             rowHTML += "<td>" +
-            '<a href="browse.html?by=title&init=' + String.fromCharCode(aa) + '">'
+            '<a href="browse.html?by=title&genreid=&init=' + String.fromCharCode(aa) + '">'
             + String.fromCharCode(aa++) + '</a>' + "</td>";
           }
           rowHTML += "</tr>";
@@ -43,7 +44,7 @@ function handleStarResult(resultData) {
     let rowHTML = "<tr>";
     for (var i = 0; i <= 9; ++i) {
       rowHTML += "<td>" +
-      '<a href="browse.html?by=genre&init=' + String(i) + '">'
+      '<a href="browse.html?by=title&init=' + String(i) + '">'
       + String(i) + '</a>' + "</td>";
     }
     rowHTML += "</tr>";
