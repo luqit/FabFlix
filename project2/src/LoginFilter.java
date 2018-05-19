@@ -28,6 +28,11 @@ public class LoginFilter implements Filter {
             chain.doFilter(request, response);
             return;
         }
+        
+        if(httpRequest.getSession().getAttribute("employee") != null) {
+        	chain.doFilter(request, response);
+        	return;
+        }
 
         // Redirect to login page if the "user" attribute doesn't exist in session
         if (httpRequest.getSession().getAttribute("user") == null) {

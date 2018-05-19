@@ -44,6 +44,8 @@ public class MovieListServlet extends HttpServlet {
 		try {
 			Connection database = dataSource.getConnection();
 			PrintWriter out = response.getWriter();
+			List<String> queryList = new ArrayList<String>();
+			List<String> queries = new ArrayList<String>();
 			
 			System.out.println("CONNECTED");
 						
@@ -57,6 +59,7 @@ public class MovieListServlet extends HttpServlet {
 			String limit = request.getParameter("limit");
 			String offset = request.getParameter("offset");
 			String query = "";
+			boolean isLetter = false;
 			
 			if(!order.equals("null") && !order.isEmpty() && !genre.equals("null"))
 			{
@@ -76,9 +79,10 @@ public class MovieListServlet extends HttpServlet {
 			query += "join ratings on movies.id = ratings.movieId ";
 			query += "join genres_in_movies on movies.id = genres_in_movies.movieId ";
 			query += "join genres on genres_in_movies.genreId = genres.id ";
-			query += "group by movies.id having genreNames LIKE '%" + genre + "%' ";
+			query += "group by movies.id having genreNames LIKE ? ";
 			query += sortBy;
 			query += "limit " + limit + " offset " + offset;
+			queries.add(genre);
 			}
 			
 			else if(!order.equals("null") && !order.isEmpty())
@@ -113,8 +117,10 @@ public class MovieListServlet extends HttpServlet {
 			query += "join ratings on movies.id = ratings.movieId ";
 			query += "join genres_in_movies on movies.id = genres_in_movies.movieId ";
 			query += "join genres on genres_in_movies.genreId = genres.id ";
-			query += "group by movies.id having movies.title LIKE '" + letter + "%' ";
+			query += "group by movies.id having movies.title LIKE ? ";
 			query += "limit " + limit + " offset " + offset;
+			queries.add(letter);
+			isLetter = true;
 			}
 			
 			else if (!genre.equals("null") && !genre.isEmpty())
@@ -128,13 +134,13 @@ public class MovieListServlet extends HttpServlet {
 			query += "join ratings on movies.id = ratings.movieId ";
 			query += "join genres_in_movies on movies.id = genres_in_movies.movieId ";
 			query += "join genres on genres_in_movies.genreId = genres.id ";
-			query += "group by movies.id having genreNames LIKE '%" + genre + "%' ";
+			query += "group by movies.id having genreNames LIKE ? ";
 			query += "limit " + limit + " offset " + offset;
+			queries.add(genre);
 			}
 			
 			else
 			{
-			List<String> queryList = new ArrayList<String>();
 
 			
 			query += "select movies.id, movies.title, movies.year, movies.director, ";
@@ -147,19 +153,22 @@ public class MovieListServlet extends HttpServlet {
 			
 			if(!title.equals("null") && !title.isEmpty())
 			{
-				queryList.add("movies.title LIKE '%" + title + "%'");
+				queryList.add("movies.title LIKE ?");
+				queries.add(title);
 				System.out.println(queryList);
 			}
 			
 			if(!year.equals("null") && !year.isEmpty())
 			{
-				queryList.add("movies.year LIKE '%" + year + "%'");
+				queryList.add("movies.year LIKE ?");
+				queries.add(year);
 				System.out.println(queryList);
 			}
 			
 			if(!director.equals("null") && !director.isEmpty())
 			{
-				queryList.add("movies.director LIKE '%" + director + "%'");
+				queryList.add("movies.director LIKE ?");
+				queries.add(director);
 				System.out.println(queryList);
 			}
 			/*
@@ -174,14 +183,25 @@ public class MovieListServlet extends HttpServlet {
 			System.out.println(queryAdd);
 			
 			query += queryAdd;
-			query += " group by movies.id having starNames LIKE '%" + name + "%' ";
+			query += " group by movies.id having starNames LIKE ? ";
+			queries.add(name);
 			query += "limit " + limit + " offset " + offset;
 			}
 			System.out.println(query);
 			
-			Statement statement = database.createStatement();
+			PreparedStatement preparedStatement = database.prepareStatement(query);
+			if(isLetter)
+				preparedStatement.setString(1, queries.get(0) + "%");
+			else {
+				for(int x = 0; x < queries.size(); x++)
+				{
+					preparedStatement.setString(x + 1, "%" +queries.get(x)+ "%");
+				}
+			}
+			ResultSet rs = preparedStatement.executeQuery();
+			//Statement statement = database.createStatement();
 			
-			ResultSet rs = statement.executeQuery(query);	
+			//ResultSet rs = statement.executeQuery(query);	
 
 			JsonArray jsonArray = new JsonArray();
 
@@ -218,7 +238,7 @@ public class MovieListServlet extends HttpServlet {
 			response.setStatus(200);
 
 			rs.close();
-			statement.close();
+			preparedStatement.close();
 			database.close();
 			
 			

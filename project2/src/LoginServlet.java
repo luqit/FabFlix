@@ -24,9 +24,10 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        
+        String employee = request.getParameter("employee");
         String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
         
+      
         JsonObject responseJsonObject = new JsonObject();
         // verify the recaptcha response
 		try {      	
@@ -42,20 +43,53 @@ public class LoginServlet extends HttpServlet {
         }  
 		try {
 	     	Connection connection = dataSource.getConnection();
-	     	Statement statement = connection.createStatement();
-			String query = String.format("SELECT * from customers where email='%s'", username);
-			//ResultSet rs = statement.executeQuery(query);
+	     	//Statement statement = connection.createStatement();
+			//String query = String.format("SELECT * from customers where email='%s'", username);
+	     	String query = "";
+	     	System.out.println("HELLOOOO" + employee);
+	     	System.out.println(username);
+	     	//employee = employee.toString();
+	     	if(employee != null)
+	     	{
+	     		query += "SELECT * from employees where email=?";
+	     		username = employee;
+	     		System.out.println(query);
+	     		
+	     	}
+	     	//else if(!username.equals("null") && !username.isEmpty())
+	     	else
+	     	{
+	     		query += "SELECT * from customers where email=?";
+	     		System.out.println(query);
+	     	}
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, username);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			System.out.println(resultSet);
 	     	System.out.println("Login Servlet:" + username);	     	
-	     	ResultSet resultSet = statement.executeQuery(query);
+	     	//ResultSet resultSet = statement.executeQuery(query);
 	     	boolean success = false;
 	        if (resultSet.next()) {
 	            
 	            String encryptedPassword = resultSet.getString("password");
+	            System.out.println(encryptedPassword);
+	            System.out.println(password);
 				success = new StrongPasswordEncryptor().checkPassword(password, encryptedPassword);
 				if(success == true) {
+					if(employee != null)
+					{
+						System.out.println("IN EMPLOYEE");
+		            	responseJsonObject.addProperty("employee", employee);
+		            	request.getSession().setAttribute("employee", employee);
+					}
+					else
+					{
+					System.out.println("IN USER");
 					request.getSession().setAttribute("user", new User(username));
 		            String userId = resultSet.getString("id");
 		            request.getSession().setAttribute("userId", userId);
+		            System.out.println(userId);
+					}
 		            //JsonObject responseJsonObject = new JsonObject();
 		            responseJsonObject.addProperty("status", "success");
 		            responseJsonObject.addProperty("message", "success");	
@@ -66,7 +100,8 @@ public class LoginServlet extends HttpServlet {
 			         responseJsonObject.addProperty("message", "invalid password!");	
 			         response.getWriter().write(responseJsonObject.toString());
 				}
-	        } else {
+	        } 
+	        else {
 	            // Login fail
 	            //JsonObject responseJsonObject = new JsonObject();
 	            responseJsonObject.addProperty("status", "fail");
