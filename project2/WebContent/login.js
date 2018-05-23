@@ -10,8 +10,11 @@ function handleLoginResult(resultDataString) {
     console.log("status:" +resultDataJson["status"]);
     console.log("gstatus:" +resultDataJson["gstatus"]);
     // If login success, redirect to index.html page
-    if (resultDataJson["status"] === "success" && resultDataJson["gstatus"] === "success") {
+    if (resultDataJson["employee"] == null && resultDataJson["status"] === "success" && resultDataJson["gstatus"] === "success") {
         window.location.replace("index.html");
+    }
+    else if(resultDataJson["employee"] != null && resultDataJson["status"] === "success" && resultDataJson["gstatus"] === "success"){
+    	window.location.replace("_dashboard.html")
     }
     // If login fail, display error message on <div> with id "login_error_message"
     else {

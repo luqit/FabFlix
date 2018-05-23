@@ -1,4 +1,3 @@
-<!-- This page will be redirected from any url if you are not logged in -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,19 +7,6 @@
 </head>
 <body>
 <h2>Login to Fablix</h2>
-<!-- Set the method to POST to avoid username/password showing on URL
-     Disable the default action because our JS function will handle it. -->
-<form id="login_form" method="post" action="#">
-    <label><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="username">
-    <br>
-    <label><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="password">
-    <br>  
-    <div class="g-recaptcha" data-sitekey="6LcFP1kUAAAAAHz1xC5poxnRvY5dTHKTYKyFYJ44"></div>
-    <input type="submit" value="Login"> 
-</form>
-<!--  
 <form id="login_form" method="post" action="#">
     <label><b>Employee Username</b></label>
     <input type="text" placeholder="Enter Username" name="employee">
@@ -28,11 +14,10 @@
     <label><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="password">
     <br>  
-    <div class="g-recaptcha" data-sitekey="6LcB1VcUAAAAANZyUhy3GcwIZWPUgSSBaMoE4PVB"></div>
+    <div class="g-recaptcha" data-sitekey="6LcFP1kUAAAAAHz1xC5poxnRvY5dTHKTYKyFYJ44"></div>
     <input type="submit" value="Login"> 
 </form>
--->
-<a href="employeeLogin.html">Employee Login</a>
+<a href="login.html">User Login</a>
 <div id="login_error_message"></div>
 <div id="g_error_message"></div>
 <!-- include jQuery-->
