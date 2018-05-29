@@ -171,22 +171,25 @@ public class MovieListServlet extends HttpServlet {
 				queries.add(director);
 				System.out.println(queryList);
 			}
-			/*
-			if(name != null || ! name.isEmpty())
+			
+			if(!name.equals("null") || ! name.isEmpty())
 			{
-				queryList.add("star.names LIKE '%" + name + "%'");
+				queryList.add("stars.name LIKE ?");
+				queries.add(name);
 				System.out.println(queryList);
 			}
-			*/
+			
 			String queryAdd = String.join(" AND ", queryList);
 			
 			System.out.println(queryAdd);
 			
 			query += queryAdd;
-			query += " group by movies.id having starNames LIKE ? ";
-			queries.add(name);
+			//query += " group by movies.id having starNames LIKE ? ";
+			query += " group by movies.id ";
+			//queries.add(name);
 			query += "limit " + limit + " offset " + offset;
 			}
+		
 			System.out.println(query);
 			
 			PreparedStatement preparedStatement = database.prepareStatement(query);
@@ -199,12 +202,11 @@ public class MovieListServlet extends HttpServlet {
 				}
 			}
 			ResultSet rs = preparedStatement.executeQuery();
-			//Statement statement = database.createStatement();
+			System.out.println(preparedStatement);
+
+
 			
-			//ResultSet rs = statement.executeQuery(query);	
-
 			JsonArray jsonArray = new JsonArray();
-
 			// Iterate through each row of rsl
 			while (rs.next()) {
 
@@ -226,6 +228,7 @@ public class MovieListServlet extends HttpServlet {
 				jsonObject.addProperty("genreNames", genreNames);
 				jsonObject.addProperty("starNames", starNames);
 				jsonObject.addProperty("rating", rating);
+				//System.out.println("limit:" + limit);
 				jsonObject.addProperty("limit", limit);
 				jsonObject.addProperty("offset", offset);
 				

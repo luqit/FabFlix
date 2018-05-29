@@ -93,7 +93,6 @@ function handleResult(resultData) {
         movieTableBodyElement.append(rowHTML);
     }
     
-    alert("coming soon!");
     //jQuery("#movie_table_body").on("click", ".btn", addToCart(this.id,this.name));
     $(document).on("click", '.btn', function(event) {
     	addToCart(event, this.id,this.name);

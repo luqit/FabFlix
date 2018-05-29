@@ -50,7 +50,7 @@ function handleResult(resultData) {
     let movieTableBodyElement = jQuery("#movie_table_body");
     
     // Concatenate the html tags with resultData jsonObject to create table rows
-    for (let i = 0; i < parseInt(resultData[0]["limit"]); i++) {
+    for (let i = 0; i < Math.min(parseInt(resultData[0]["limit"]), resultData.length); i++) {
         let rowHTML = "";
         rowHTML += "<tr>";
         rowHTML += "<th><button type='button' class='btn btn-outline-primary' id = '" + resultData[i]["movieId"] + "' name='" + resultData[i]["movieTitle"] +"'>Add to Cart</button>" + resultData[i]["movieId"] + "</th>";
@@ -158,6 +158,8 @@ let letter = getParameterByName('letter');
 let order = getParameterByName('order');
 let limit = getParameterByName('limit');
 let offset = getParameterByName('offset');
+
+console.log(limit);
 
         
 //Makes the HTTP GET request and registers on success callback function handleResult
