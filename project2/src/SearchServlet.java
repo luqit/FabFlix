@@ -32,8 +32,11 @@ public class SearchServlet extends HttpServlet {
 	try {
 		Connection database = dataSource.getConnection();
 		
+		System.out.println("1");
 		String title = request.getParameter("title");
+		System.out.println("2");
 		String year = request.getParameter("year");
+		System.out.println("3");
 		String director = request.getParameter("director");
 		String starName = request.getParameter("starName");
 		
@@ -42,6 +45,7 @@ public class SearchServlet extends HttpServlet {
 		request.setAttribute("director", director);
 		request.setAttribute("starName", starName);
 		
+		System.out.println("In the search servlet!");
 		response.sendRedirect("movie_list.html?title="+title+"&year="+year+"&director="+director+"&starName="+starName+"&limit=10&offset=0");
 		//NEXT: get URL parameters (&title=asdf&year=asdf....etc) through js. kinda like how
 		//it's done in single star servlet. js gets html URL parameters -> through ajax 

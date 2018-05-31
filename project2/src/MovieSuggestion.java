@@ -60,6 +60,7 @@ public class MovieSuggestion extends HttpServlet{
 		JsonArray j = new JsonArray();
 		List<String> result = new ArrayList<String>();
 		if(queries.containsKey(query)) {
+			System.out.println("This query is already in the cache!");
 			for(String m : queries.get(query)) {
 				j.add(generateJsonObject(m));	
 			}

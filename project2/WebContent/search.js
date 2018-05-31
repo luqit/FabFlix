@@ -52,12 +52,13 @@ function handleLookupAjaxSuccess(data, query, doneCallback) {
 function handleSelectSuggestion(suggestion) {
 	// TODO: jump to the specific result page based on the selected suggestion
 	var title = suggestion["value"]
-	console.log("you select " + title);
-	jQuery.ajax({
-    	dataType: "json",
-    	method: "GET",
-        url: "MovieListServlet?title=" +title +"&year=&director=&starName=&genre=&genreId=&letter=&order=&limit=&offset=",
-    });	
+	console.log("you selected " + title)
+	window.location.replace("movie_list.html?title="+title+"&year=&director=&starName=&limit=10&offset=0")
+//	jQuery.ajax({
+//    	dataType: "json",
+//    	method: "GET",
+//        url: "SearchServlet?title=" +title +"&year=&director=&starName=",
+//    });	
 }
 
 
@@ -78,7 +79,7 @@ $('#autocomplete').autocomplete({
     },
     onSelect: function(suggestion) {
     		handleSelectSuggestion(suggestion)
-    		console.log("selected!")
+    		//console.log("selected!")
     },
     // set the groupby name in the response json data field
     groupBy: "category",

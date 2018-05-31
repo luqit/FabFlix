@@ -148,6 +148,8 @@ function handleResult(resultData) {
         	});
      	
 }
+
+console.log("looking for the movies...")
 let title = getParameterByName('title');
 let year = getParameterByName('year');
 let director = getParameterByName('director');
@@ -164,6 +166,7 @@ console.log(limit);
         
 //Makes the HTTP GET request and registers on success callback function handleResult
 jQuery.ajax({
+	
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
     url: "MovieListServlet?title=" +title +"&year=" +year +"&director=" +director +"&starName=" +starName +"&genre=" +genre + "&genreId=" +genreId + "&letter=" +letter + "&order=" +order + "&limit=" +limit + "&offset=" +offset, // Setting request url, which is mapped by StarsServlet in Stars.java
