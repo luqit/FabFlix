@@ -59,6 +59,8 @@ public class MovieListServlet extends HttpServlet {
 			String limit = request.getParameter("limit");
 			String offset = request.getParameter("offset");
 			String query = "";
+			
+			
 			boolean isLetter = false;
 			
 			if(!order.equals("null") && !order.isEmpty() && !genre.equals("null"))
@@ -151,12 +153,21 @@ public class MovieListServlet extends HttpServlet {
 			query += "join genres_in_movies on movies.id = genres_in_movies.movieId ";
 			query += "join genres on genres_in_movies.genreId = genres.id where ";
 			
-			if(!title.equals("null") && !title.isEmpty())
-			{
-				queryList.add("movies.title LIKE ?");
-				queries.add(title);
-				System.out.println(queryList);
+//			if(!title.equals("null") && !title.isEmpty())
+//			{
+//				queryList.add("movies.title LIKE ?");
+//				queries.add(title);
+//				System.out.println(queryList);
+//			}
+			String[] splited = title.split("\\s+");
+			String words = "";
+			if(!title.equals("null") && !title.isEmpty()) {
+				for(String str : splited) {
+					words += "+" + str + "* ";
+				}
+				query += "MATCH (title) AGAINST ('" + words + "' IN BOOLEAN MODE) AND ";
 			}
+			
 			
 			if(!year.equals("null") && !year.isEmpty())
 			{
