@@ -163,7 +163,10 @@ public class MovieListServlet extends HttpServlet {
 			String words = "";
 			if(!title.equals("null") && !title.isEmpty()) {
 				for(String str : splited) {
-					words += "+" + str + "* ";
+					if(str.length() > 2)
+						words += "+" + str + "* ";
+					else
+						continue;
 				}
 				query += "MATCH (title) AGAINST ('" + words + "' IN BOOLEAN MODE) AND ";
 			}
