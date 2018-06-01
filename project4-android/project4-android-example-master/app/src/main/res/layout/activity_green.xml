@@ -19,8 +19,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:text="The green page" />
+            android:text="Movie List"
+            android:textSize="25sp" />
 
         <View
             android:layout_width="fill_parent"
@@ -29,11 +29,11 @@
             android:background="#FFFFFF" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:id="@+id/last_page_msg_container"
+            android:layout_width="342dp"
+            android:layout_height="60dp"
             android:text="No message from last page."
-            android:id="@+id/last_page_msg_container"/>
+            android:textSize="15sp" />
 
         <View
             android:layout_width="fill_parent"

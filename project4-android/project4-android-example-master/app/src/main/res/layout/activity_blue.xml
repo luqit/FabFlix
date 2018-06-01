@@ -19,8 +19,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:text="The blue page" />
+            android:text="Search for Movies"
+            android:textSize="25sp" />
 
         <View
             android:layout_width="fill_parent"
@@ -48,17 +48,17 @@
             android:textSize="20sp" />
 
         <EditText
+            android:id="@+id/fullTextSearch"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
-            android:id="@+id/blue_2_red_message"/>
+            android:layout_marginBottom="20dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="Go to the Red Page"
-            android:onClick="goToRed"/>
+            android:onClick="connectToTomcat"
+            android:text="Go to the Red Page" />
 
         <View
             android:layout_width="fill_parent"

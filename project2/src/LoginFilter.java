@@ -25,6 +25,7 @@ public class LoginFilter implements Filter {
         // Check if this URL is allowed to access without logging in
         if (this.isUrlAllowedWithoutLogin(httpRequest.getRequestURI())) {
             // Keep default action: pass along the filter chain
+        	System.out.println("ADDING TO CHAIN");
             chain.doFilter(request, response);
             return;
         }
@@ -49,7 +50,7 @@ public class LoginFilter implements Filter {
         requestURI = requestURI.toLowerCase();
 
         return requestURI.endsWith("login.html") || requestURI.endsWith("login.js")
-                || requestURI.endsWith("api/login");
+                || requestURI.endsWith("api/login") || requestURI.endsWith("moviefulltextsearch") ;
     }
 
     /**

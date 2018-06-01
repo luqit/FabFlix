@@ -72,7 +72,10 @@ public class MovieSuggestion extends HttpServlet{
 				String[] splited = query.split("\\s+");
 				String words = "";
 				for(String str : splited) {
-					words += "+" + str + "* ";
+					if(str.length() > 2)
+						words += "+" + str + "* ";
+					else
+						continue;
 				}
 				String q = "SELECT * FROM movies WHERE MATCH (title) AGAINST ('" + words + "' IN BOOLEAN MODE) LIMIT 10";
 				PreparedStatement preparedStatement = database.prepareStatement(q);
