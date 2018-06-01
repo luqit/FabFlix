@@ -6,7 +6,7 @@
 
 
 <Resource url="jdbc:mysql://localhost:3306/moviedb" 
-password="TIAN950130" 
+password="Cookiesncream123!" 
 username="root" 
 validationQuery="select 1"
 type="javax.sql.DataSource" 

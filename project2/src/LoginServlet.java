@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Map;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
@@ -25,10 +26,24 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String employee = request.getParameter("employee");
-        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
         
-      
+        System.out.println(username);
+        System.out.println(password);
+        
+        //String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+        
+        /*
+        Map<String, String[]> map = request.getParameterMap();
+        for (String key: map.keySet()) {
+            System.out.println(key);
+            username = key;
+            System.out.println(map.get(key)[0]);
+            password = map.get(key)[0];
+        }
+        */
+        
         JsonObject responseJsonObject = new JsonObject();
+        /*
         // verify the recaptcha response
 		try {      	
             RecaptchaVerifyUtils.verify(gRecaptchaResponse);             
@@ -41,6 +56,7 @@ public class LoginServlet extends HttpServlet {
             response.getWriter().write(responseJsonObject.toString());
             return;
         }  
+        */
 		try {
 	     	Connection connection = dataSource.getConnection();
 	     	//Statement statement = connection.createStatement();

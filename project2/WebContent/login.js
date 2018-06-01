@@ -8,12 +8,14 @@ function handleLoginResult(resultDataString) {
     console.log("handle login response");
     console.log(resultDataJson);
     console.log("status:" +resultDataJson["status"]);
-    console.log("gstatus:" +resultDataJson["gstatus"]);
+    //console.log("gstatus:" +resultDataJson["gstatus"]);
     // If login success, redirect to index.html page
-    if (resultDataJson["employee"] == null && resultDataJson["status"] === "success" && resultDataJson["gstatus"] === "success") {
+    //if (resultDataJson["employee"] == null && resultDataJson["status"] === "success" && resultDataJson["gstatus"] === "success") {
+    if (resultDataJson["employee"] == null && resultDataJson["status"] === "success") {
         window.location.replace("index.html");
     }
-    else if(resultDataJson["employee"] != null && resultDataJson["status"] === "success" && resultDataJson["gstatus"] === "success"){
+    //else if(resultDataJson["employee"] != null && resultDataJson["status"] === "success" && resultDataJson["gstatus"] === "success"){
+    else if(resultDataJson["employee"] != null && resultDataJson["status"] === "success"){
     	window.location.replace("_dashboard.html")
     }
     // If login fail, display error message on <div> with id "login_error_message"
@@ -24,8 +26,10 @@ function handleLoginResult(resultDataString) {
             console.log(resultDataJson["message"]);
         	jQuery("#login_error_message").text(resultDataJson["message"]);
         }
+    	/*
         if(resultDataJson["gmessage"] != null)
         	jQuery("#g_error_message").text(resultDataJson["gmessage"]);
+        	*/
     }
 
 }

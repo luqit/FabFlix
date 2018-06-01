@@ -3,6 +3,7 @@
 <html>
 <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <title>Fablix</title>
 
@@ -24,7 +25,11 @@
     	#span2{
     		float:right;	
     	}		
+    	navbarNav{
+    		width:100%;
+    	}
     </style>
+    
 </head>
 <body>
 <div>
@@ -46,6 +51,10 @@
 	     		</li>
 	    	</ul>
 	  	</div>
+	  		<form class="form-inline">
+    <input class="form-control mr-sm-2" type="text" name = "hero" id="autocomplete" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
 	</nav>
 <div class="jumbotron">
   <h1 class="display-4">Welcome to Fabflix!</h1>
@@ -70,7 +79,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.4.7/jquery.autocomplete.min.js"></script>
 <script src="./index.js"></script>
 </body>
 </html>
