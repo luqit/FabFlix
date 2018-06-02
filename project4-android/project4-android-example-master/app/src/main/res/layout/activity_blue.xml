@@ -28,13 +28,6 @@
             android:layout_marginBottom="20dip"
             android:background="#FFFFFF" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="No message from last page."
-            android:id="@+id/last_page_msg_container"/>
-
         <View
             android:layout_width="fill_parent"
             android:layout_height="2dip"
@@ -42,9 +35,9 @@
             android:background="#FFFFFF" />
 
         <TextView
-            android:text="Message for the red page:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Type here:"
             android:textSize="20sp" />
 
         <EditText
@@ -58,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:onClick="connectToTomcat"
-            android:text="Go to the Red Page" />
+            android:text="Search" />
 
         <View
             android:layout_width="fill_parent"
