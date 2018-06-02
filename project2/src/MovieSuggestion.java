@@ -68,6 +68,7 @@ public class MovieSuggestion extends HttpServlet{
 		
 		else {
 			try {
+				String q = "";
 				Connection database = dataSource.getConnection();
 				String[] splited = query.split("\\s+");
 				String words = "";
@@ -77,7 +78,14 @@ public class MovieSuggestion extends HttpServlet{
 					else
 						continue;
 				}
-				String q = "SELECT * FROM movies WHERE MATCH (title) AGAINST ('" + words + "' IN BOOLEAN MODE) LIMIT 10";
+				
+				if(splited.length <= 1) {
+					 q = "SELECT * FROM movies WHERE MATCH (title) AGAINST ('" + words + "' IN BOOLEAN MODE) OR edrec('" + query + "', title, 1) LIMIT 10";
+				}
+				else {
+					 q = "SELECT * FROM movies WHERE MATCH (title) AGAINST ('" + words + "' IN BOOLEAN MODE) OR edth('" + query + "', title, 1) LIMIT 10";
+				}
+				
 				PreparedStatement preparedStatement = database.prepareStatement(q);
 				ResultSet rs = preparedStatement.executeQuery();						
 				
