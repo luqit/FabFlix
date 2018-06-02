@@ -31,4 +31,5 @@ dependencies {
     api 'com.android.support:appcompat-v7:21.0.3'
     api files('libs/library-1.0.10.jar')
     api 'com.google.android.gms:play-services-safetynet:15.0.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
 }

@@ -8,9 +8,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 public class GreenActivity extends ActionBarActivity {
 
     @Override
@@ -19,21 +16,11 @@ public class GreenActivity extends ActionBarActivity {
         setContentView(R.layout.activity_green);
 
         Bundle bundle = getIntent().getExtras();
-        Toast.makeText(this, "MOOOOOOOOOVIES", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Last activity was " + bundle.get("last_activity") + ".", Toast.LENGTH_LONG).show();
 
-        String jsonString = bundle.getString("jsonArrayString");
-        String movieId = "";
-        if (jsonString != null && !"".equals(jsonString)) {
-            try {
-                JSONArray jsonArray = new JSONArray(jsonString);
-                for(int x = 0; x < jsonArray.length(); x++)
-                {
-                    movieId = jsonArray.getJSONObject(x).getString("movieId");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            ((TextView) findViewById(R.id.last_page_msg_container)).setText(jsonString);
+        String msg = bundle.getString("message");
+        if (msg != null && !"".equals(msg)) {
+            ((TextView) findViewById(R.id.last_page_msg_container)).setText(msg);
         }
     }
 
