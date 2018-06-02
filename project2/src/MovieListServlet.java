@@ -169,10 +169,10 @@ public class MovieListServlet extends HttpServlet {
 						continue;
 				}
 				if(splited.length <= 1) {
-					query += "MATCH (title) AGAINST ('" + words + "' IN BOOLEAN MODE) OR edrec('" + title + "', title, 2) AND ";
+					query += "MATCH (title) AGAINST ('" + words + "' IN BOOLEAN MODE) OR edrec('" + title + "', title, 1) AND ";
 				}
 				else {
-					query += "MATCH (title) AGAINST ('" + words + "' IN BOOLEAN MODE) OR edth('" + title + "', title, 2) AND ";
+					query += "MATCH (title) AGAINST ('" + words + "' IN BOOLEAN MODE) OR edth('" + title + "', title, 1) AND ";
 				}					
 			}
 			
