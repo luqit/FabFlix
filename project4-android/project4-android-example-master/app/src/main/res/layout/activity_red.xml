@@ -34,11 +34,12 @@
                     android:background="#FFFFFF" />
 
                 <TextView
+                    android:id="@+id/last_page_msg_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
                     android:text="No message from last page."
-                    android:id="@+id/last_page_msg_container"/>
+                    android:textSize="15sp"
+                    android:visibility="invisible" />
                 
                 <View
                     android:layout_width="fill_parent"
@@ -62,8 +63,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
+                    android:onClick="goToBlue"
                     android:text="Go to the Blue Page"
-                    android:onClick="goToBlue"/>
+                    android:visibility="invisible" />
 
                 <View
                     android:layout_width="fill_parent"
@@ -88,7 +90,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:onClick="goToGreen"
-                    android:text="Go to the Green Page" />
+                    android:text="Go to the Green Page"
+                    android:visibility="invisible" />
 
                 <View
                     android:layout_width="fill_parent"
@@ -100,20 +103,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:text="Send Login HTTP Request"
-                    android:onClick="connectToTomcat"/>
+                    android:onClick="connectToTomcat"
+                    android:text="Login" />
 
                 <TextView
-                    android:text="HTTP Response:"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp" />
+                    android:text="HTTP Response:"
+                    android:textSize="20sp"
+                    android:visibility="invisible" />
 
                 <TextView
+                    android:id="@+id/http_response"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:id="@+id/http_response"/>
+                    android:visibility="invisible" />
 
             </LinearLayout>
     </ScrollView>

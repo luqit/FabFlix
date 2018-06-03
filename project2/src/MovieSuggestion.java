@@ -73,10 +73,7 @@ public class MovieSuggestion extends HttpServlet{
 				String[] splited = query.split("\\s+");
 				String words = "";
 				for(String str : splited) {
-					if(str.length() > 2)
 						words += "+" + str + "* ";
-					else
-						continue;
 				}
 				
 				if(splited.length <= 1) {

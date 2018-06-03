@@ -21,10 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/list"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="26dp"
+        android:layout_alignStart="@+id/list"
         android:onClick="goToPreviousPage"
-        android:text="Button" />
+        android:text="Previous Page" />
 
     <Button
         android:id="@+id/next"
@@ -33,6 +32,15 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:onClick="goToNextPage"
-        android:text="Button" />
+        android:text="Next Page" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/list"
+        android:layout_alignParentTop="true"
+        android:onClick="backToMovieSearch"
+        android:text="Back to Search" />
 
 </RelativeLayout>

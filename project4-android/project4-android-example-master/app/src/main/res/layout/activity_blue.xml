@@ -60,29 +60,33 @@
             android:background="#FFFFFF" />
 
         <TextView
-            android:text="Message for the green page:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp" />
+            android:text="Message for the green page:"
+            android:textSize="20sp"
+            android:visibility="invisible" />
 
         <EditText
+            android:id="@+id/blue_2_green_message"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="20dp"
-            android:id="@+id/blue_2_green_message"/>
+            android:visibility="invisible" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:onClick="goToGreen"
             android:text="Go to the Green Page"
-            android:onClick="goToGreen"/>
+            android:visibility="invisible" />
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="2dip"
             android:layout_marginBottom="10dip"
-            android:background="#FFFFFF" />
+            android:background="#FFFFFF"
+            android:visibility="invisible" />
 
     </LinearLayout>
 </RelativeLayout>

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -68,7 +69,15 @@ public class ListViewActivity extends Activity {
 
     public void goToNextPage(View view) {
         Intent goToIntent = new Intent(this, ListViewActivity.class);
+        try{
+            if((offset+5) > new JSONArray(jsonString).length()){
+                Toast.makeText(getApplicationContext(), "You shall not pass!!! cuz we outta movies", LENGTH_SHORT).show();
+                return;
+            }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         goToIntent.putExtra("jsonArrayString", jsonString);
         goToIntent.putExtra("offset", offset+5);
 
@@ -97,5 +106,14 @@ public class ListViewActivity extends Activity {
         goToIntent.putExtra("movieTitle", ((TextView)view.findViewById(R.id.movieTitle)).getText().toString());
         goToIntent.putExtra("jsonArrayString", jsonString);
         startActivity(goToIntent);
+    }
+
+    public void backToMovieSearch(View view) {
+        Intent goToIntent = new Intent(this, BlueActivity.class);
+
+        goToIntent.putExtra("message", "Welcome back!! Search more movies!!!!");
+
+        startActivity(goToIntent);
+
     }
 }

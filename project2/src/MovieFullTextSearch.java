@@ -53,11 +53,12 @@ public class MovieFullTextSearch extends HttpServlet {
 			//query += "MATCH (title) AGAINST ('" + words + "' IN BOOLEAN MODE) group by movies.id limit 10 offset 0";
             
             if(splited.length <= 1) {
-                query += "MATCH (title) AGAINST ('" + words + "' IN BOOLEAN MODE) OR edrec('" + title + "', title, 1) group by movies.id limit 10 offset 0";
+                query += "MATCH (title) AGAINST ('" + words + "' IN BOOLEAN MODE) OR edrec('" + title + "', title, 1) group by movies.id";
             }
             else {
-                query += "MATCH (title) AGAINST ('" + words + "' IN BOOLEAN MODE) OR edth('" + title + "', title, 1) group by movies.id limit 10 offset 0";
+                query += "MATCH (title) AGAINST ('" + words + "' IN BOOLEAN MODE) OR edth('" + title + "', title, 1) group by movies.id";
             }
+            System.out.println(query);
 		}
 		
 		System.out.println(query);
