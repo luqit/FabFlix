@@ -45,10 +45,7 @@ public class MovieFullTextSearch extends HttpServlet {
 		query += "join genres on genres_in_movies.genreId = genres.id where ";
 		if(!title.equals("null") && !title.isEmpty()) {
 			for(String str : splited) {
-				if(str.length() > 2)
 					words += "+" + str + "* ";
-				else
-					continue;
 			}
 			//query += "MATCH (title) AGAINST ('" + words + "' IN BOOLEAN MODE) group by movies.id limit 10 offset 0";
             
