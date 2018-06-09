@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * Servlet Filter implementation class LoginFilter
  */
-@WebFilter(filterName = "LoginFilter", urlPatterns = "/*")
+@WebFilter(filterName = "LoginFilter", urlPatterns = "/")
 public class LoginFilter implements Filter {
 
     /**

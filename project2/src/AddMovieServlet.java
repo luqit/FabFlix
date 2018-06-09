@@ -26,7 +26,7 @@ import com.google.gson.JsonObject;
 @WebServlet("/AddMovieServlet")
 public class AddMovieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    @Resource(name="jdbc/moviedb")
+    @Resource(name="jdbc/TestDB")
     DataSource dataSource;
 	
 

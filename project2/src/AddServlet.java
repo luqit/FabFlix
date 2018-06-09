@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 @WebServlet("/AddServlet")
 public class AddServlet extends HttpServlet {
     private static final long serialVersionUID = 5L;
-    @Resource(name = "jdbc/moviedb")
+    @Resource(name = "jdbc/TestDB")
     private DataSource dataSource;
 
 
