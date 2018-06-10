@@ -29,13 +29,12 @@ import com.google.gson.JsonObject;
 @WebServlet("/AddMovieServlet")
 public class AddMovieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	/*
     @Resource(name="jdbc/Master")
-    */
     DataSource dataSource;    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
 		try {
+			/*
 			 Context initCtx;
 			try {
 				initCtx = new InitialContext();
@@ -48,6 +47,7 @@ public class AddMovieServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 			Connection database = dataSource.getConnection();
 			PrintWriter out = response.getWriter();
 			String movieTitle = request.getParameter("movieTitle");
