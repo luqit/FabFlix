@@ -10,4 +10,10 @@
     <res-type>javax.sql.DataSource</res-type>
     <res-auth>Container</res-auth>
   </resource-ref>
+  <resource-ref>
+    <description>MySQL DataSource Master</description>
+    <res-ref-name>jdbc/Master</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
 </web-app>

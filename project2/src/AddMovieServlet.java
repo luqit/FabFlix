@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,14 +29,25 @@ import com.google.gson.JsonObject;
 @WebServlet("/AddMovieServlet")
 public class AddMovieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    @Resource(name="jdbc/TestDB")
-    DataSource dataSource;
-	
-
-    
+	/*
+    @Resource(name="jdbc/Master")
+    */
+    DataSource dataSource;    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
 		try {
+			 Context initCtx;
+			try {
+				initCtx = new InitialContext();
+	         Context envCtx = (Context) initCtx.lookup("java:comp/env");
+	            if (envCtx == null)
+	                System.out.println("envCtx is NULL");
+	            // Look up our data source
+	            dataSource = (DataSource) envCtx.lookup("jdbc/Master");
+			} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 			Connection database = dataSource.getConnection();
 			PrintWriter out = response.getWriter();
 			String movieTitle = request.getParameter("movieTitle");

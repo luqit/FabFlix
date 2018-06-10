@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 @WebServlet("/RemoveServlet")
 public class RemoveServlet extends HttpServlet {
     private static final long serialVersionUID = 5L;
-    @Resource(name = "jdbc/TestDB")
+    @Resource(name = "jdbc/Master")
     private DataSource dataSource;
 
 
