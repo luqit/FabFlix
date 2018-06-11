@@ -25,42 +25,42 @@ td {
   <tr>
     <td>Case 1: HTTP/1 thread</td>
     <td><img src="graph_results_case1.png" alt="Graph Results Screenshot Case 1" style="width:304px;height:228px;"></td>
-    <td>??</td>
-    <td>??</td>
-    <td>??</td>
-    <td>Executed most slowly within 3 minutes since the single thread can only make http requests/responses one at a time.</td>
+    <td>37</td>
+    <td>4.408572272899319ms</td>
+    <td>4.237286092732778ms</td>
+    <td>Fastest response time because the single thread has the fully open resources of the database/server. <td>
   </tr>
   <tr>
     <td>Case 2: HTTP/10 threads</td>
     <td><img src="graph_results_case2.png" alt="Graph Results Screenshot Case 2" style="width:304px;height:228px;"></td>
-    <td>??</td>
-    <td>??</td>
-    <td>??</td>
-    <td>Executed exponentially quicker than a single thread (13 seconds) since multiple threads can make 10 http requests at once and can take another http request as soon as they return an http response.</td>
+    <td>58</td>
+    <td>20.168252747539743ms</td>
+    <td>17.086677212339136ms</td>
+    <td>Executed a lot more slowly because 10 threads are sharing the same database, overwhelming it so requests are slower.</td>
   </tr>
   <tr>
     <td>Case 3: HTTPS/10 threads</td>
     <td><img src="graph_results_case3.png" alt="Graph Results Screenshot Case 3" style="width:304px;height:228px;"></td>
-    <td>??</td>
-    <td>??</td>
-    <td>??</td>
-    <td>Likewise HTTP w/ 10 threads, same speed was captured since security wouldn't make a difference.</td>
+    <td>48</td>
+    <td>24.1062313996972ms</td>
+    <td>19.668283079863738ms</td>
+    <td>Similar speed to HTTP/10 threads since HTTPS for the most part adds encryption in the initial connection, but has little  impact on network performance thereafter.</td>
   </tr>
   <tr>
     <td>Case 4: HTTP/10 threads/No prepared statements</td>
     <td><img src="graph_results_case4.png" alt="Graph Results Screenshot Case 4" style="width:304px;height:228px;"></td>
-    <td>??</td>
-    <td>??</td>
-    <td>??</td>
-    <td>Slightly slower than execution with prepared statements by 2 seconds(13 seconds), which makes sense since prepared statements are compiled once and reused.</td>
+    <td>58</td>
+    <td>20.72903009273728ms</td>
+    <td>17.599916887963662ms</td>
+    <td>Similar speed as above although prepared statements are technically faster since they compile once and are able to be reused in SQL after. In this project, upon every request the prepared statements are "reprepared" anew since only one movie is being requested per iteration, so there is little difference between the two statements.</td>
   </tr>
   <tr>
     <td>Case 5: HTTP/10 threads/No connection pooling</td>
     <td><img src="graph_results_case5.png" alt="Graph Results Screenshot Case 4" style="width:304px;height:228px;"></td>
-    <td>??</td>
-    <td>??</td>
-    <td>??</td>
-    <td>Same speed as 10 threads w/ prepared statements, connection pooling has no affect.</td>
+    <td>172</td>
+    <td>98.234800398273</td>
+    <td>95.493580031145</td>
+    <td>Performance drops significantly because 10 threads are sharing the same connection and database resources.>
   </tr>
 
 </table> 
@@ -78,34 +78,34 @@ td {
   <tr>
     <td>Case 1: HTTP/1 thread</td>
     <td><img src="graph_results_case4.png" alt="Graph Results Screenshot Case 1" style="width:304px;height:228px;"></td>
-    <td>??</td>
-    <td>??</td>
-    <td>??</td>
-    <td>--</td>
+    <td>45</td>
+    <td>5.8410038299</td>
+    <td>5.9982100459</td>
+    <td>Expected to be quick since the database has no delay in delivering a request since there's only one user accessing it.</td>
   </tr>
   <tr>
     <td>Case 2: HTTP/10 threads</td>
     <td><img src="graph_results_case2.png" alt="Graph Results Screenshot Case 2" style="width:304px;height:228px;"></td>
-    <td>??</td>
-    <td>??</td>
-    <td>??</td>
-    <td>--</td>
+    <td>76</td>
+    <td>18.0923490013</td>
+    <td>18.3590088125</td>
+    <td>Speeds are quicker than unscaled server since threads are able to distribute their load between two servers.</td>
   </tr>
   <tr>
     <td>Case 3: HTTP/10 threads/No prepared statements</td>
     <td><img src="graph_results_case3.png" alt="Graph Results Screenshot Case 4" style="width:304px;height:228px;"></td>
-    <td>??</td>
-    <td>??</td>
-    <td>??</td>
-    <td>--</td>
+    <td>86</td>
+    <td>19.40080192355</td>
+    <td>19.68916321048</td>
+    <td>As noted above, change of statements have little impact in this case since prepared statements aren't being reused for multiple queries, therefore both statements are recompiled for each iteration. </td>
   </tr>
   <tr>
     <td>Case 4: HTTP/10 threads/No connection pooling</td>
     <td><img src="graph_results_case1.png" alt="Graph Results Screenshot Case 4" style="width:304px;height:228px;"></td>
-    <td>??</td>
-    <td>??</td>
-    <td>??</td>
-    <td>--</td>
+    <td>135</td>
+    <td>78.9761039987</td>
+    <td>80.2134459211</td>
+    <td>Page loading and performance is better than unscaled architecture because load is balanced between servers, although absence of connection pooling does increase performance relatively for scaled systems.</td>
   </tr>
 
 </table> 
