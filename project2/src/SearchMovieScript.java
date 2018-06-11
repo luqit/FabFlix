@@ -35,8 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@WebServlet("/MovieListServletz")
-public class MovieListServlet extends HttpServlet {
+@WebServlet("/MovieListServlet")
+public class SearchMovieScript extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	@Resource(name = "jdbc/moviedb")
@@ -269,10 +269,9 @@ public class MovieListServlet extends HttpServlet {
 			long elapsedTimeTS = endTimeTS - startTimeTS; // elapsed time in nano seconds. Note: print the values in nano seconds
 			String contextPath = request.getServletContext().getRealPath("/");
 
-			String xmlFilePath=contextPath+"\\test";
+			String xmlFilePath=contextPath+"test";
 
-			System.out.println(xmlFilePath);
-			
+			System.out.println(xmlFilePath +"XMLLLL");
 			File myfile = new File(xmlFilePath);
 			System.out.println(myfile.getName());
 			System.out.println(myfile.getAbsolutePath());
@@ -287,7 +286,7 @@ public class MovieListServlet extends HttpServlet {
 					System.out.println(stringTS);
 					System.out.println(stringTJ);
 					
-				    pOut.write("elapsedTS: "+stringTS+", elapsedTJ: "+stringTJ + System.lineSeparator());
+				    pOut.write(stringTS+","+stringTJ + System.lineSeparator());
 				} catch (IOException e) {
 				    //exception handling left as an exercise for the reader
 				}

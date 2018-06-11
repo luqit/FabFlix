@@ -1,5 +1,6 @@
 
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -45,8 +46,11 @@ public class SearchServlet extends HttpServlet {
 		request.setAttribute("director", director);
 		request.setAttribute("starName", starName);
 		
+		String limit = "10";
+		String offset = "0";
+		
 		System.out.println("In the search servlet!");
-		response.sendRedirect("movie_list.html?title="+title+"&year="+year+"&director="+director+"&starName="+starName+"&limit=10&offset=0");
+		response.sendRedirect("movie_list.html?title="+title+"&year="+year+"&director="+director+"&starName="+starName+"&limit="+limit+"&offset="+offset);
 		//NEXT: get URL parameters (&title=asdf&year=asdf....etc) through js. kinda like how
 		//it's done in single star servlet. js gets html URL parameters -> through ajax 
 		//adds parameters to servlet URL -> servlet .getParameter each parameter and 
