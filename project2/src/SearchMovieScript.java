@@ -13,6 +13,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -49,6 +52,23 @@ public class SearchMovieScript extends HttpServlet {
 		try {
 			long startTimeTS = System.nanoTime();
 			Connection database = dataSource.getConnection();
+			
+			/*
+			 Context initCtx;
+				try {
+					initCtx = new InitialContext();
+		         Context envCtx = (Context) initCtx.lookup("java:comp/env");
+		            if (envCtx == null)
+		                System.out.println("envCtx is NULL");
+		            // Look up our data source
+		            dataSource = (DataSource) envCtx.lookup("jdbc/moviedb");
+				} catch (NamingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			Connection database = dataSource.getConnection();
+			*/
 			PrintWriter out = response.getWriter();
 			List<String> queryList = new ArrayList<String>();
 			List<String> queries = new ArrayList<String>();
@@ -162,6 +182,7 @@ public class SearchMovieScript extends HttpServlet {
 			if(!title.equals("null") && !title.isEmpty())
 			{
 				queryList.add("movies.title LIKE ?");
+				//queryList.add("movies.title LIKE '%" + title +"%'");
 				queries.add(title);
 				System.out.println(queryList);
 			}
@@ -187,6 +208,7 @@ public class SearchMovieScript extends HttpServlet {
 			if(!year.equals("null") && !year.isEmpty())
 			{
 				queryList.add("movies.year LIKE ?");
+				//queryList.add("movies.year LIKE '%" + year +"%'");
 				queries.add(year);
 				System.out.println(queryList);
 			}
@@ -194,6 +216,7 @@ public class SearchMovieScript extends HttpServlet {
 			if(!director.equals("null") && !director.isEmpty())
 			{
 				queryList.add("movies.director LIKE ?");
+				//queryList.add("movies.director LIKE '%" + director + "%'");
 				queries.add(director);
 				System.out.println(queryList);
 			}
@@ -201,6 +224,7 @@ public class SearchMovieScript extends HttpServlet {
 			if(!name.equals("null") || ! name.isEmpty())
 			{
 				queryList.add("stars.name LIKE ?");
+				//queryList.add("stars.name LIKE '%" + name + "%'");
 				queries.add(name);
 				System.out.println(queryList);
 			}
@@ -210,14 +234,15 @@ public class SearchMovieScript extends HttpServlet {
 			System.out.println(queryAdd);
 			
 			query += queryAdd;
-			//query += " group by movies.id having starNames LIKE ? ";
+			//query += " group by movies.id having starNames LIKE '%" + name + "%' ";
 			query += " group by movies.id ";
 			//queries.add(name);
 			query += "limit " + limit + " offset " + offset;
 			}
-		
+			
 			System.out.println(query);
 			long startTimeTJ = System.nanoTime();
+			
 			PreparedStatement preparedStatement = database.prepareStatement(query);
 			if(isLetter)
 				preparedStatement.setString(1, queries.get(0) + "%");
@@ -229,6 +254,11 @@ public class SearchMovieScript extends HttpServlet {
 			}
 			ResultSet rs = preparedStatement.executeQuery();
 			System.out.println(preparedStatement);
+			/*
+			Statement statement = database.createStatement();
+			ResultSet rs = statement.executeQuery(query);
+			System.out.println(statement);
+			*/
 			long endTimeTJ = System.nanoTime();
 			long elapsedTimeTJ = endTimeTJ - startTimeTJ;
 
@@ -296,6 +326,7 @@ public class SearchMovieScript extends HttpServlet {
 
 			rs.close();
 			preparedStatement.close();
+			//statement.close();
 			database.close();
 			
 			

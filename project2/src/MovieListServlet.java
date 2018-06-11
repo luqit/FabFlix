@@ -287,7 +287,7 @@ public class MovieListServlet extends HttpServlet {
 					System.out.println(stringTS);
 					System.out.println(stringTJ);
 					
-				    pOut.write("elapsedTS: "+stringTS+", elapsedTJ: "+stringTJ + System.lineSeparator());
+				    pOut.write(stringTS+","+stringTJ + System.lineSeparator());
 				} catch (IOException e) {
 				    //exception handling left as an exercise for the reader
 				}
